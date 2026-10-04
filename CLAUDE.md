@@ -96,6 +96,14 @@ Código en `py/` (paquete `arbol_estadistica`, `tests/`, `visor/`, `construir_vi
   (de ningún cliente). Los tests usan datos sintéticos.
 - Todo cambio lleva test en `py/tests/` (`python -m pytest -q py`, o `ejecutar_tests.bat`). Un test por comportamiento, con casos donde la teoría dé la respuesta.
 
+## Commits y versiones
+
+- **Un commit por entrega**, con la versión: `vX.Y.Z: resumen en una línea` (lo genera `herramientas/publicar.py`).
+- El resumen va en español, dice el **efecto** («el mapa 3D limita los enlaces a 120») y no el método, y cabe en ~70 caracteres.
+- **Versión:** parche (`0.11.7` → `0.11.8`) para arreglos, textos y ajustes de rendimiento o instalador; menor (`0.12.0`) para funciones, demos o ramas nuevas; mayor (`1.0.0`) cuando Mario decida que es estable.
+- Cambios que no tocan el programa (solo documentación) van como `docs: …`, sin subir versión ni regenerar instaladores.
+- Nunca `Co-Authored-By`. Nunca datos privados (`publicar.py` lo comprueba antes de hacer commit).
+
 ## Reglas de estilo heredadas de los agentes de Mario
 
 - **Gauss (estadística):** explicita supuestos y justifica el método; no uses el p-valor a ciegas
