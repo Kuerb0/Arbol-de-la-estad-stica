@@ -1,0 +1,649 @@
+{
+ "escala": "0 = muy malo · 5 = aceptable · 10 = excelente. Sin nota (n/a) = la propiedad no aplica a esa función.",
+ "bloques": [
+  {
+   "id": "estimacion",
+   "nombre": "Estimación",
+   "desc": "Propiedades clásicas del estimador (teoría de la estimación)."
+  },
+  {
+   "id": "inferencia",
+   "nombre": "Inferencia",
+   "desc": "Contrastes, intervalos y cuánto puedes fiarte de los p-valores."
+  },
+  {
+   "id": "prediccion",
+   "nombre": "Predicción y modelo",
+   "desc": "Qué tal predice, si lo hace bien calibrado y si se entiende."
+  },
+  {
+   "id": "datos",
+   "nombre": "Datos que soporta",
+   "desc": "Supuestos que exige y tipos de datos difíciles que aguanta."
+  },
+  {
+   "id": "codigo",
+   "nombre": "Código",
+   "desc": "Cómo se comporta la implementación: tamaño de datos, velocidad, fallos, reproducibilidad."
+  }
+ ],
+ "propiedades": [
+  {
+   "id": "insesgadez",
+   "bloque": "estimacion",
+   "nombre": "Insesgadez",
+   "def": "E[θ̂] = θ: en promedio acierta. Se mide por simulación (sesgo relativo con n moderado)."
+  },
+  {
+   "id": "consistencia",
+   "bloque": "estimacion",
+   "nombre": "Consistencia",
+   "def": "θ̂ → θ cuando n → ∞ (y, en selección de modelos, que elija el modelo verdadero con n grande)."
+  },
+  {
+   "id": "eficiencia",
+   "bloque": "estimacion",
+   "nombre": "Eficiencia",
+   "def": "Varianza mínima: cercanía a la cota de Cramér-Rao o eficiencia relativa asintótica (ARE) frente a la alternativa."
+  },
+  {
+   "id": "ecm",
+   "bloque": "estimacion",
+   "nombre": "Error cuadrático medio",
+   "def": "ECM = sesgo² + varianza. Un estimador sesgado (Ridge, Firth) puede ganar aquí."
+  },
+  {
+   "id": "normalidad_asintotica",
+   "bloque": "estimacion",
+   "nombre": "Normalidad asintótica",
+   "def": "√n(θ̂ − θ) → Normal: justifica los errores estándar y los IC de Wald."
+  },
+  {
+   "id": "identificabilidad",
+   "bloque": "estimacion",
+   "nombre": "Identificabilidad",
+   "def": "Los parámetros tienen solución única (falla con separación perfecta, colinealidad o categorías vacías)."
+  },
+  {
+   "id": "tamano_alfa",
+   "bloque": "inferencia",
+   "nombre": "Tamaño (error tipo I)",
+   "def": "El α real coincide con el nominal: con H0 cierta rechaza el 5 % de las veces. Se mide por simulación."
+  },
+  {
+   "id": "potencia",
+   "bloque": "inferencia",
+   "nombre": "Potencia",
+   "def": "1 − β: probabilidad de detectar un efecto real. Se compara con la mejor alternativa en el mismo escenario."
+  },
+  {
+   "id": "cobertura_ic",
+   "bloque": "inferencia",
+   "nombre": "Cobertura de los IC",
+   "def": "El IC del 95 % contiene el valor verdadero el 95 % de las veces (simulación)."
+  },
+  {
+   "id": "cuantificacion_incertidumbre",
+   "bloque": "inferencia",
+   "nombre": "Cuantificación de la incertidumbre",
+   "def": "Devuelve errores estándar, IC o p-valores además de la estimación puntual."
+  },
+  {
+   "id": "validez_muestras_pequenas",
+   "bloque": "inferencia",
+   "nombre": "Validez en muestras pequeñas",
+   "def": "Exactitud con n finito: tests exactos o correcciones frente a aproximaciones asintóticas."
+  },
+  {
+   "id": "validez_tras_seleccion",
+   "bloque": "inferencia",
+   "nombre": "Validez tras la selección",
+   "def": "Los p-valores e IC siguen valiendo después de haber elegido variables o modelo con los mismos datos."
+  },
+  {
+   "id": "generalizacion",
+   "bloque": "prediccion",
+   "nombre": "Capacidad de generalización",
+   "def": "Resistencia al sobreajuste: poca diferencia entre train y test."
+  },
+  {
+   "id": "calibracion",
+   "bloque": "prediccion",
+   "nombre": "Calibración",
+   "def": "Las probabilidades predichas coinciden con las frecuencias observadas."
+  },
+  {
+   "id": "discriminacion",
+   "bloque": "prediccion",
+   "nombre": "Discriminación",
+   "def": "Capacidad de separar clases u ordenar el riesgo (AUC, Gini, c)."
+  },
+  {
+   "id": "parsimonia",
+   "bloque": "prediccion",
+   "nombre": "Parsimonia",
+   "def": "Pocos parámetros para lo que explica."
+  },
+  {
+   "id": "interpretabilidad",
+   "bloque": "prediccion",
+   "nombre": "Interpretabilidad",
+   "def": "Se puede explicar a negocio o al regulador (coeficientes, OR, tablas)."
+  },
+  {
+   "id": "estabilidad",
+   "bloque": "prediccion",
+   "nombre": "Estabilidad",
+   "def": "Da el mismo resultado al remuestrear los datos (bootstrap de la selección, de los clusters…)."
+  },
+  {
+   "id": "robustez",
+   "bloque": "datos",
+   "nombre": "Robustez",
+   "def": "Punto de ruptura y sensibilidad a atípicos y a fallos de los supuestos."
+  },
+  {
+   "id": "supuestos",
+   "bloque": "datos",
+   "nombre": "Pocos supuestos",
+   "def": "Cuánto exige a los datos (10 = casi nada; 0 = normalidad, linealidad, homocedasticidad…)."
+  },
+  {
+   "id": "censura",
+   "bloque": "datos",
+   "nombre": "Tratamiento de la censura",
+   "def": "Usa correctamente observaciones censuradas (supervivencia, siniestros abiertos)."
+  },
+  {
+   "id": "desbalanceo",
+   "bloque": "datos",
+   "nombre": "Tratamiento del desbalanceo",
+   "def": "Funciona bien con clases raras (eventos poco frecuentes)."
+  },
+  {
+   "id": "dependencia",
+   "bloque": "datos",
+   "nombre": "Tratamiento de la dependencia",
+   "def": "Aguanta datos no independientes (panel, series, clusters) o lo corrige."
+  },
+  {
+   "id": "escalabilidad",
+   "bloque": "codigo",
+   "nombre": "Escalabilidad",
+   "def": "Cómo crece el tiempo con n (exponente medido: n¹ = 10, n² ≈ 3) y hasta qué tamaño funciona."
+  },
+  {
+   "id": "velocidad",
+   "bloque": "codigo",
+   "nombre": "Velocidad",
+   "def": "Tiempo de ejecución medido en un caso de referencia."
+  },
+  {
+   "id": "memoria",
+   "bloque": "codigo",
+   "nombre": "Memoria",
+   "def": "Pico de memoria con n grande (medido con tracemalloc)."
+  },
+  {
+   "id": "estabilidad_numerica",
+   "bloque": "codigo",
+   "nombre": "Estabilidad numérica",
+   "def": "Converge y no da NaN ni infinitos con separación, colinealidad o escalas extremas."
+  },
+  {
+   "id": "tolerancia_datos_sucios",
+   "bloque": "codigo",
+   "nombre": "Tolerancia a datos sucios",
+   "def": "Maneja NaN, categorías raras o columnas constantes; si no puede, falla con un mensaje claro."
+  },
+  {
+   "id": "reproducibilidad",
+   "bloque": "codigo",
+   "nombre": "Reproducibilidad",
+   "def": "Mismo resultado en cada ejecución (semilla fija o algoritmo determinista)."
+  },
+  {
+   "id": "configurabilidad",
+   "bloque": "codigo",
+   "nombre": "Configurabilidad",
+   "def": "Opciones útiles: pesos, familias, enlaces, umbrales, niveles de referencia."
+  },
+  {
+   "id": "coste_ajuste",
+   "bloque": "codigo",
+   "nombre": "Coste de ajuste",
+   "def": "Hiperparámetros que hay que tunear (10 = ninguno; 0 = muchos y sensibles)."
+  },
+  {
+   "id": "trazabilidad_sas",
+   "bloque": "codigo",
+   "nombre": "Trazabilidad SAS",
+   "def": "Equivalencia con un PROC de SAS, documentada y comprobada numéricamente."
+  },
+  {
+   "id": "cobertura_tests",
+   "bloque": "codigo",
+   "nombre": "Cobertura de tests",
+   "def": "Cuántas pruebas la ejercitan (medido: nº de tests que la citan)."
+  }
+ ],
+ "perfiles": [
+  {
+   "id": "equilibrado",
+   "nombre": "Equilibrado",
+   "desc": "Todas las propiedades pesan lo mismo.",
+   "pesos": {}
+  },
+  {
+   "id": "cartera_grande",
+   "nombre": "Cartera grande / big data",
+   "desc": "Millones de filas: manda que escale, que sea rápido y estable; con n enorme la potencia sobra (todo sale significativo).",
+   "pesos": {
+    "escalabilidad": 10,
+    "velocidad": 9,
+    "memoria": 9,
+    "estabilidad_numerica": 8,
+    "tolerancia_datos_sucios": 7,
+    "reproducibilidad": 6,
+    "consistencia": 6,
+    "generalizacion": 6,
+    "discriminacion": 6,
+    "calibracion": 6,
+    "desbalanceo": 6,
+    "potencia": 2,
+    "validez_muestras_pequenas": 1,
+    "eficiencia": 3,
+    "insesgadez": 4,
+    "interpretabilidad": 4,
+    "coste_ajuste": 6
+   }
+  },
+  {
+   "id": "pocos_datos",
+   "nombre": "Pocos datos / estudio",
+   "desc": "Muestras pequeñas: aprovechar la información y que la inferencia sea exacta.",
+   "pesos": {
+    "potencia": 10,
+    "eficiencia": 9,
+    "validez_muestras_pequenas": 10,
+    "insesgadez": 8,
+    "ecm": 8,
+    "tamano_alfa": 9,
+    "cobertura_ic": 8,
+    "identificabilidad": 7,
+    "estabilidad_numerica": 6,
+    "robustez": 6,
+    "cuantificacion_incertidumbre": 7,
+    "escalabilidad": 1,
+    "velocidad": 1,
+    "memoria": 1
+   }
+  },
+  {
+   "id": "regulatorio",
+   "nombre": "Regulatorio / tarificación",
+   "desc": "Informe para el regulador o tarifa: explicable, trazable, calibrada y reproducible.",
+   "pesos": {
+    "interpretabilidad": 10,
+    "trazabilidad_sas": 9,
+    "reproducibilidad": 9,
+    "calibracion": 9,
+    "cuantificacion_incertidumbre": 8,
+    "cobertura_ic": 8,
+    "tamano_alfa": 7,
+    "robustez": 7,
+    "estabilidad": 8,
+    "consistencia": 7,
+    "parsimonia": 7,
+    "cobertura_tests": 6,
+    "validez_tras_seleccion": 6,
+    "velocidad": 2,
+    "memoria": 2
+   }
+  },
+  {
+   "id": "prediccion_pura",
+   "nombre": "Predicción pura",
+   "desc": "Solo importa predecir bien fuera de muestra.",
+   "pesos": {
+    "generalizacion": 10,
+    "discriminacion": 10,
+    "calibracion": 8,
+    "ecm": 8,
+    "estabilidad": 6,
+    "desbalanceo": 6,
+    "coste_ajuste": 5,
+    "interpretabilidad": 1,
+    "trazabilidad_sas": 1,
+    "insesgadez": 2
+   }
+  }
+ ],
+ "peso_por_defecto": 5,
+ "grupos": [
+  {
+   "id": "comparar_grupos",
+   "nombre": "Comparar una variable entre grupos"
+  },
+  {
+   "id": "multiples",
+   "nombre": "Muchos contrastes / comparaciones por pares"
+  },
+  {
+   "id": "potencia_n",
+   "nombre": "Potencia y tamaño muestral"
+  },
+  {
+   "id": "cribado",
+   "nombre": "Cribar variables (filtro previo)"
+  },
+  {
+   "id": "seleccion_modelo",
+   "nombre": "Seleccionar variables del modelo"
+  },
+  {
+   "id": "logistica",
+   "nombre": "Ajustar una logística binaria"
+  },
+  {
+   "id": "justificar",
+   "nombre": "Justificar técnica o enlace"
+  },
+  {
+   "id": "validacion",
+   "nombre": "Validar un modelo (train/test)"
+  },
+  {
+   "id": "multiclase",
+   "nombre": "Respuesta con varias categorías"
+  },
+  {
+   "id": "tablas_modelo",
+   "nombre": "Tablas de resultados de un modelo"
+  },
+  {
+   "id": "superv_curvas",
+   "nombre": "Supervivencia: curvas y resúmenes"
+  },
+  {
+   "id": "superv_modelos",
+   "nombre": "Supervivencia: modelos con covariables"
+  },
+  {
+   "id": "superv_contrastes",
+   "nombre": "Supervivencia: contrastes"
+  },
+  {
+   "id": "precio",
+   "nombre": "Sensibilidad al precio"
+  },
+  {
+   "id": "colinealidad",
+   "nombre": "Multicolinealidad"
+  },
+  {
+   "id": "calibracion",
+   "nombre": "Calibración y bondad de ajuste"
+  },
+  {
+   "id": "discriminacion",
+   "nombre": "Discriminación y umbrales"
+  },
+  {
+   "id": "desbalanceo",
+   "nombre": "Clases desbalanceadas"
+  },
+  {
+   "id": "preparar",
+   "nombre": "Preparar y codificar variables"
+  },
+  {
+   "id": "segmentar",
+   "nombre": "Segmentar (clustering)"
+  },
+  {
+   "id": "graf_clasificacion",
+   "nombre": "Gráficos de clasificación"
+  },
+  {
+   "id": "graf_contrastes",
+   "nombre": "Gráficos de contrastes y potencia"
+  },
+  {
+   "id": "graf_modelos",
+   "nombre": "Gráficos de modelos y diagnóstico"
+  },
+  {
+   "id": "describir",
+   "nombre": "Describir una variable"
+  },
+  {
+   "id": "correlacion",
+   "nombre": "Correlación entre variables"
+  },
+  {
+   "id": "supuestos",
+   "nombre": "Comprobar supuestos"
+  },
+  {
+   "id": "ajuste_distribucion",
+   "nombre": "Ajustar una distribución a datos"
+  },
+  {
+   "id": "tablas",
+   "nombre": "Tablas de contingencia y riesgos"
+  },
+  {
+   "id": "apareados",
+   "nombre": "Muestras relacionadas (antes/después)"
+  },
+  {
+   "id": "intervalos",
+   "nombre": "Intervalos de confianza"
+  },
+  {
+   "id": "tarificacion",
+   "nombre": "Tarificación: modelos de frecuencia y severidad"
+  },
+  {
+   "id": "usar_tarifa",
+   "nombre": "Tarificación: prima pura, relatividades y revisión"
+  },
+  {
+   "id": "lineal",
+   "nombre": "Regresión lineal: estimar"
+  },
+  {
+   "id": "lineal_diagnostico",
+   "nombre": "Regresión lineal: diagnosticar y transformar"
+  },
+  {
+   "id": "flexibles",
+   "nombre": "Relaciones no lineales y datos agrupados"
+  },
+  {
+   "id": "faltantes",
+   "nombre": "Datos faltantes"
+  },
+  {
+   "id": "atipicos_mv",
+   "nombre": "Atípicos multivariantes"
+  },
+  {
+   "id": "comparar_multivariante",
+   "nombre": "Comparar grupos en varias variables"
+  },
+  {
+   "id": "reduccion",
+   "nombre": "Reducir dimensión"
+  },
+  {
+   "id": "escalas",
+   "nombre": "Escalas y adecuación factorial"
+  },
+  {
+   "id": "modelo_ml",
+   "nombre": "Modelo predictivo de machine learning"
+  },
+  {
+   "id": "evaluar_ml",
+   "nombre": "Comparar modelos de machine learning"
+  },
+  {
+   "id": "explicar_ml",
+   "nombre": "Explicar un modelo de caja negra"
+  },
+  {
+   "id": "biometria",
+   "nombre": "Tablas de vida y biometría"
+  },
+  {
+   "id": "vida",
+   "nombre": "Seguros y rentas de vida"
+  },
+  {
+   "id": "reservas",
+   "nombre": "Provisiones de siniestros (triángulos)"
+  },
+  {
+   "id": "agregada",
+   "nombre": "Siniestralidad agregada, ruina y primas"
+  },
+  {
+   "id": "credibilidad",
+   "nombre": "Credibilidad"
+  },
+  {
+   "id": "demografia",
+   "nombre": "Demografía"
+  },
+  {
+   "id": "medir_riesgo",
+   "nombre": "Medir riesgo y colas"
+  },
+  {
+   "id": "carteras",
+   "nombre": "Carteras e inversión"
+  },
+  {
+   "id": "renta_fija",
+   "nombre": "Renta fija y tipos"
+  },
+  {
+   "id": "opciones",
+   "nombre": "Opciones"
+  },
+  {
+   "id": "bayes",
+   "nombre": "Inferencia bayesiana"
+  },
+  {
+   "id": "mcmc",
+   "nombre": "MCMC y chequeo del modelo"
+  },
+  {
+   "id": "decision_adaptativa",
+   "nombre": "Decisión, A/B y bandidos"
+  },
+  {
+   "id": "markov",
+   "nombre": "Cadenas de Markov"
+  },
+  {
+   "id": "procesos_continuos",
+   "nombre": "Procesos en tiempo continuo y colas"
+  },
+  {
+   "id": "paseos",
+   "nombre": "Paseos aleatorios y browniano"
+  },
+  {
+   "id": "generar_aleatorios",
+   "nombre": "Generar números y variables aleatorias"
+  },
+  {
+   "id": "montecarlo",
+   "nombre": "Integración Monte Carlo"
+  },
+  {
+   "id": "probabilidad",
+   "nombre": "Cálculo de probabilidades"
+  },
+  {
+   "id": "inferencia_teoria",
+   "nombre": "Estimadores y distribuciones muestrales"
+  },
+  {
+   "id": "muestreo",
+   "nombre": "Muestreo de encuestas"
+  },
+  {
+   "id": "anova",
+   "nombre": "ANOVA y diseños clásicos"
+  },
+  {
+   "id": "experimentos",
+   "nombre": "Diseño de experimentos"
+  },
+  {
+   "id": "causal",
+   "nombre": "Efectos causales con datos observacionales"
+  },
+  {
+   "id": "ensayos",
+   "nombre": "Ensayos aleatorizados"
+  },
+  {
+   "id": "mecanismos",
+   "nombre": "Mediación y moderación"
+  },
+  {
+   "id": "metaanalisis",
+   "nombre": "Combinar estudios"
+  },
+  {
+   "id": "regresion_inferencia",
+   "nombre": "Inferencia en regresión lineal"
+  },
+  {
+   "id": "regresion_no_parametrica",
+   "nombre": "Regresión no paramétrica y por tramos"
+  },
+  {
+   "id": "reduccion_supervisada",
+   "nombre": "Reducción de dimensión supervisada"
+  },
+  {
+   "id": "interpretar_modelo",
+   "nombre": "Explicar y simplificar un modelo"
+  },
+  {
+   "id": "multivariante_avanzado",
+   "nombre": "Multivariante: respuestas múltiples y estructura"
+  },
+  {
+   "id": "clasificacion_lineal",
+   "nombre": "Clasificadores lineales clásicos"
+  },
+  {
+   "id": "no_supervisado_ml",
+   "nombre": "Patrones sin respuesta"
+  },
+  {
+   "id": "generativa",
+   "nombre": "IA generativa (bases estadísticas)"
+  },
+  {
+   "id": "graf_simulacion",
+   "nombre": "Gráficos de simulación"
+  },
+  {
+   "id": "graf_diseno",
+   "nombre": "Gráficos de diseño y causal"
+  },
+  {
+   "id": "graf_exploracion",
+   "nombre": "Gráficos de exploración multivariante"
+  }
+ ]
+}

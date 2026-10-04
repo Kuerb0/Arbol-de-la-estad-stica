@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Árbol de la estadística</title>
+<style>
+/* Visor del árbol: mapa 3D (núcleo + ramas en órbita), buscador y panel de código. Un solo fichero, sin internet. */
+:root {
+  --bg:#F3F5F8; --surface:#FFFFFF; --surface-2:#E9EDF3; --ink:#111B2E; --muted:#566178; --line:#D3DAE4;
+  --accent:#1F58C4; --accent-ink:#FFFFFF; --danger:#B3361F; --danger-bg:#FBEAE6; --on-leaf:#FFFFFF;
+  --c-preprocesado:#137A6E; --c-seleccion:#6B3DB5; --c-modelos:#2458C8; --c-diagnostico:#BF3D26;
+  --c-clustering:#2F7F3B; --c-contrastes:#96590A; --c-guias:#4D5B72;
+  --c-graficos:#7A6A00; --c-demos:#0E7490;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --apag:#898781; --rej:#e1e0d9;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"Cascadia Code","SF Mono",Consolas,"Liberation Mono",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0E1520; --surface:#162131; --surface-2:#1D2B3F; --ink:#E6ECF5; --muted:#9AA7BD; --line:#2A3A52;
+  --accent:#6FA2FF; --accent-ink:#0E1520; --danger:#FF8A73; --danger-bg:#3A1F1A; --on-leaf:#0E1520;
+  --c-preprocesado:#45C3B3; --c-seleccion:#B18CF0; --c-modelos:#6FA2FF; --c-diagnostico:#FF8A73;
+  --c-clustering:#6FCF7B; --c-contrastes:#E5A23A; --c-guias:#93A3BD; color-scheme:dark;
+  --c-graficos:#D4BD45; --c-demos:#4FC3DC; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --rej:#2c2c2a; } }
+:root[data-theme="dark"]{
+  --bg:#0E1520; --surface:#162131; --surface-2:#1D2B3F; --ink:#E6ECF5; --muted:#9AA7BD; --line:#2A3A52;
+  --accent:#6FA2FF; --accent-ink:#0E1520; --danger:#FF8A73; --danger-bg:#3A1F1A; --on-leaf:#0E1520;
+  --c-preprocesado:#45C3B3; --c-seleccion:#B18CF0; --c-modelos:#6FA2FF; --c-diagnostico:#FF8A73;
+  --c-clustering:#6FCF7B; --c-contrastes:#E5A23A; --c-guias:#93A3BD; color-scheme:dark;
+  --c-graficos:#D4BD45; --c-demos:#4FC3DC; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --rej:#2c2c2a; }
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,pre{font-family:var(--mono)}
+
+.app{display:grid;grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);height:100%;min-height:420px}
+.top{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;padding:6px 8px;min-width:0}
+.brand{display:flex;min-width:0;flex:none}
+.brand h1{margin:0;font-size:15px;font-weight:650;letter-spacing:-.01em;cursor:default}
+.search{position:relative;flex:0 1 260px;min-width:150px}
+.search input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.search svg{position:absolute;left:11px;top:50%;translate:0 -50%;width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2}
+.resultados{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);max-height:min(60vh,420px);overflow:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.18);padding:4px;margin:0;list-style:none}
+.resultados li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:2px 10px;padding:7px 8px;border-radius:6px;cursor:pointer}
+.resultados li[aria-selected="true"],.resultados li:hover{background:var(--surface-2)}
+.resultados .pt{grid-row:1/3;align-self:start;margin-top:5px;width:10px;height:10px;border-radius:50%}
+.resultados .n{font-family:var(--mono);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.resultados .d{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resultados .vacio{display:block;padding:10px;color:var(--muted);cursor:default}
+.tools{display:flex;align-items:center;gap:4px;margin-left:auto;flex:none}
+.btn.ic{padding:5px 9px;font-size:13px;line-height:1.2}
+.btn[aria-pressed="true"]{background:var(--surface-2);border-color:var(--muted)}
+.filtros{position:relative} .filtros summary{list-style:none} .filtros summary::-webkit-details-marker{display:none}
+.filtros .pop{position:absolute;right:0;top:calc(100% + 4px);z-index:30;width:300px;display:grid;gap:8px;padding:10px 12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.18);font-size:12.5px}
+.filtros .pop p{margin:0;color:var(--muted);font-size:12px}
+.chk{display:flex;align-items:center;gap:6px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface);cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primario{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.primario:hover{filter:brightness(1.08)}
+
+.ramas{display:flex;flex-wrap:nowrap;gap:5px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:thin;padding:2px 0}
+.ramas .chip{flex:none}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--line);border-radius:99px;background:var(--surface);cursor:pointer;font-size:12.5px}
+.chip:hover,.chip[aria-pressed="true"]{background:var(--surface-2);border-color:var(--muted)}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip b{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.cuerpo{display:grid;grid-template-columns:minmax(0,1fr) 14px var(--ancho-det,430px);padding:0 8px 8px;min-height:0}
+.divisor{position:relative;cursor:col-resize;touch-action:none;outline:none}
+.divisor::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:4px;border-radius:2px;background:transparent;transition:background .15s}
+.divisor::after{content:"";position:absolute;left:4px;top:50%;width:6px;height:36px;margin-top:-18px;border-radius:3px;background:var(--line)}
+.divisor:hover::before,.divisor:focus-visible::before,.divisor.arrastrando::before{background:var(--accent)}
+.cuerpo.sin-detalle{grid-template-columns:minmax(0,1fr) 14px 0} .cuerpo.sin-detalle .detalle{display:none}
+.lienzo{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;background:#03040a;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.migas{position:absolute;left:8px;top:8px;z-index:5;max-width:calc(100% - 16px);display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;padding:3px 8px;
+  border-radius:8px;background:rgba(8,10,18,.72);font-size:12.5px;color:#8f9bb3}
+.migas button{background:none;border:0;padding:2px 4px;border-radius:4px;cursor:pointer;color:#8fb4ff}
+.migas button:hover{background:rgba(255,255,255,.1)}
+.migas span.act{color:#fff;font-weight:600;padding:2px 4px}
+#mapa{flex:1;min-height:0;width:100%;display:block;cursor:grab;background:#03040a;outline:none}
+#mapa:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.mapa-ctrls{position:absolute;right:10px;bottom:10px;z-index:5;display:flex;gap:6px}
+.mapa-ctrls .btn{background:rgba(8,10,18,.72);border-color:#2a3550;color:#c9d3e6;backdrop-filter:blur(3px)}
+.mapa-ctrls .btn:hover{background:rgba(30,40,64,.85)}
+
+
+.b-preprocesado{--c:var(--c-preprocesado)} .b-seleccion{--c:var(--c-seleccion)} .b-modelos{--c:var(--c-modelos)}
+.b-diagnostico{--c:var(--c-diagnostico)} .b-clustering{--c:var(--c-clustering)} .b-contrastes{--c:var(--c-contrastes)} .b-guias{--c:var(--c-guias)}
+.b-graficos{--c:var(--c-graficos)} .b-demos{--c:var(--c-demos)}
+
+.detalle{min-width:0;min-height:0;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.det-cab{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12.5px}
+.det-cab i{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.detalle h2{margin:6px 0 4px;font-family:var(--mono);font-size:18px;font-weight:650;overflow-wrap:anywhere}
+.detalle h3{margin:18px 0 6px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:650}
+.desc{margin:0 0 12px}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:0 0 12px}
+.meta dt{color:var(--muted)} .meta dd{margin:0;overflow-wrap:anywhere}
+.aviso{margin:0 0 12px;padding:8px 10px;border-radius:8px;background:var(--danger-bg);color:var(--danger);font-size:13px}
+.acciones{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+pre.cod,pre.doc{margin:0;padding:12px;border-radius:8px;background:var(--surface-2);overflow:auto;font-size:12.5px;line-height:1.5;tab-size:4}
+pre.cod{max-height:420px}
+pre.doc{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px}
+.k{color:var(--c-seleccion);font-weight:600} .s{color:var(--c-clustering)} .c{color:var(--muted);font-style:italic} .num{color:var(--c-contrastes)}
+.detalle h2.sans{font-family:var(--sans);font-size:19px}
+.estado{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;margin:0 0 10px;background:var(--surface-2)}
+.estado.con{background:var(--c);color:var(--on-leaf)}
+.enlaces{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
+.enlaces .btn{font-family:var(--mono);font-size:12.5px}
+.fuentes{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fuentes li{padding:8px 10px;border:1px solid var(--line);border-radius:8px;display:grid;gap:2px}
+.fuentes .tag{font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.fuentes .tag.vn{color:var(--c-contrastes)}
+.fuentes a{color:var(--accent);overflow-wrap:anywhere}
+.fuentes .base{color:var(--muted);font-size:12px}
+.vacio-det h2{font-family:var(--sans);font-size:17px}
+.vacio-det ul{padding-left:18px;margin:8px 0 14px}
+.rapidas{display:flex;flex-wrap:wrap;gap:6px}
+.toast{position:fixed;left:50%;bottom:18px;translate:-50% 0;background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+.toast.on{opacity:1}
+
+
+/* ---------- «Probar»: mini-cuaderno con datos simulados ---------- */
+.nb{display:grid;gap:8px;margin:4px 0 6px}
+.nb-barra{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.nb-estado{font-size:12px;color:var(--muted)}
+.nb-celda{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.nb-cab{display:flex;align-items:center;gap:6px;padding:3px 6px;background:var(--surface-2);font-size:11.5px;color:var(--muted)}
+.nb-cab .btn{padding:2px 9px;font-size:12px}
+.nb-cab span{margin-right:auto;font-family:var(--mono)}
+.nb-ed{display:block;width:100%;border:0;margin:0;padding:8px 10px;resize:vertical;background:var(--surface);color:var(--ink);
+  font:12px/1.5 var(--mono);tab-size:4;white-space:pre;overflow:auto;min-height:3em}
+.nb-ed:focus{outline:2px solid var(--accent);outline-offset:-2px}
+.nb-sal:empty{display:none}
+.nb-sal{border-top:1px solid var(--line);padding:6px 10px;display:grid;gap:6px;overflow-x:auto;font-size:12px}
+.nb-sal pre{margin:0;white-space:pre-wrap;font:11.5px/1.45 var(--mono)}
+.nb-sal pre.err{color:var(--danger)}
+.nb-sal img{max-width:100%;height:auto;border-radius:6px;background:#fff}
+.nb-tabla{border-collapse:collapse;font:11.5px var(--mono);font-variant-numeric:tabular-nums}
+.nb-tabla th,.nb-tabla td{padding:2px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.nb-tabla thead th{color:var(--muted)}
+.nb-nota{font-size:12px;color:var(--muted);margin:0}
+/* ---------- demos interactivas («Cómo funciona») ---------- */
+.dm{display:grid;gap:10px;margin:6px 0 4px}
+.dm-ctrls{display:grid;gap:6px}
+.dm-ctrl{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,140px) 52px;align-items:center;gap:8px;font-size:12.5px}
+.dm-ctrl input[type=range]{width:100%;margin:0;accent-color:var(--accent)}
+.dm-sel{grid-column:2/4;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:12.5px}
+.dm-val{font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.dm-chk{display:flex;align-items:center;gap:6px;font-size:12.5px}
+.dm-bots{display:flex;flex-wrap:wrap;gap:6px}
+.dm-svg{display:block;width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.dm-grid{stroke:var(--rej);stroke-width:1} .dm-eje{stroke:var(--line);stroke-width:1}
+.dm-tick{fill:var(--muted);font:10px var(--sans)} .dm-etq-eje{fill:var(--muted);font:10.5px var(--sans)}
+.dm-txt{fill:var(--ink);font:11px var(--sans)}
+.dm-l1,.dm-l2,.dm-l3,.dm-lm,.dm-ltinta,.dm-lfina,.dm-lres{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.dm-l1{stroke:var(--s1);stroke-width:2} .dm-l2{stroke:var(--s2);stroke-width:2} .dm-l3{stroke:var(--s3);stroke-width:2}
+.dm-lm{stroke:var(--apag);stroke-width:1.5} .dm-ltinta{stroke:var(--ink);stroke-width:2} .dm-lfina{stroke:var(--apag);stroke-width:1}
+.dm-lres{stroke:var(--apag);stroke-width:.8;opacity:.6} .dm-fino{stroke-width:1.2}
+.dm-f1{fill:var(--s1)} .dm-f2{fill:var(--s2)} .dm-f3{fill:var(--s3)} .dm-fm{fill:var(--apag)}
+.dm-op30{fill-opacity:.3} .dm-op35{fill-opacity:.35} .dm-op45{fill-opacity:.45} .dm-op60{fill-opacity:.6} .dm-op70{fill-opacity:.7}
+.dm-anillo{stroke:var(--surface);stroke-width:2}
+.dm-ley{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted)}
+.dm-ley i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.dm-ley i.dm-k1{background:var(--s1)} .dm-ley i.dm-k2{background:var(--s2)} .dm-ley i.dm-k3{background:var(--s3)}
+.dm-ley i.dm-km{background:var(--apag)} .dm-ley i.dm-kg{background:var(--apag);opacity:.45;height:8px}
+.dm-ley i.dm-p1,.dm-ley i.dm-p2,.dm-ley i.dm-pm{width:8px;height:8px;border-radius:50%}
+.dm-ley i.dm-p1{background:var(--s1)} .dm-ley i.dm-p2{background:var(--s2)} .dm-ley i.dm-pm{background:var(--apag)}
+.dm-lect{font-size:13px;line-height:1.5;padding:8px 10px;border-radius:8px;background:var(--surface-2);display:grid;gap:4px}
+.dm-tabla{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.dm-tabla th,.dm-tabla td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right}
+.dm-tabla th{color:var(--muted);font-weight:600}
+.dm-nota{font-size:12.5px;color:var(--muted);line-height:1.45}
+.dm-sub{margin:8px 0 2px;font-size:13px}
+.dm-galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.dm-tarj{display:grid;gap:4px;align-content:start;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:12px}
+.dm-pie{color:var(--muted);font-variant-numeric:tabular-nums} .dm-uso{line-height:1.4}
+.dm-ley i.dm-k3{height:3px}
+.dm-tabla th:first-child,.dm-tabla td:first-child{text-align:left}
+.aprende{margin:0 0 10px;padding:9px 11px;border-left:3px solid var(--c);background:var(--surface-2);border-radius:0 8px 8px 0;font-size:13px}
+
+/* ---------- propiedades: barras 0-10 y perfiles ---------- */
+.perfil-sel{padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:12.5px;max-width:190px}
+.pp-cab{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:center;margin:4px 0 10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.pp-total{grid-row:1/3;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.pp-total small{font-size:13px;font-weight:600;color:var(--muted)}
+.pp-cab .pp-txt{font-size:12.5px;color:var(--muted)} .pp-cab .pp-txt b{color:var(--ink)}
+.pp-pc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
+.pp-pc ul{margin:0;padding:8px 10px 8px 26px;border-radius:8px;font-size:12.5px;background:var(--surface-2)}
+.pp-pc li{margin:2px 0} .pp-pc .pro::marker{content:"+  ";color:var(--c-clustering);font-weight:700} .pp-pc .con::marker{content:"−  ";color:var(--danger);font-weight:700}
+.pp-uso{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;margin:0 0 10px;font-size:12.5px}
+.pp-uso dt{font-weight:650} .pp-uso dt.si{color:var(--c-clustering)} .pp-uso dt.no{color:var(--danger)} .pp-uso dd{margin:0}
+details.pbloque{border:1px solid var(--line);border-radius:8px;margin:0 0 6px;background:var(--surface)}
+details.pbloque>summary{display:grid;grid-template-columns:minmax(120px,1.5fr) minmax(56px,1fr) 30px 56px;gap:8px;align-items:center;padding:6px 10px;cursor:pointer;list-style:none;font-size:12.5px;font-weight:650}
+details.pbloque>summary::-webkit-details-marker{display:none}
+details.pbloque>summary .pb-t::before{content:"▸ ";color:var(--muted);font-size:10px}
+details.pbloque[open]>summary .pb-t::before{content:"▾ "}
+.pb-lista{display:grid;gap:3px;padding:2px 10px 8px}
+.pb{display:grid;grid-template-columns:minmax(120px,1.5fr) minmax(56px,1fr) 30px 56px;gap:8px;align-items:center;font-size:12.5px}
+.pb.poco{opacity:.5}
+.pb-n{overflow-wrap:anywhere;line-height:1.25;cursor:help}
+.pb-barra{position:relative;height:9px;border-radius:5px;background:var(--surface-2);overflow:hidden}
+.pb-barra i{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:var(--c,var(--accent))}
+.pb-barra.bajo i{background:var(--danger)}
+.pb-barra::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.pb-v{text-align:right;font-variant-numeric:tabular-nums;font-weight:650}
+.pb-o{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);white-space:nowrap}
+.pb-o.medido{color:var(--c-clustering);font-weight:700;cursor:help} .pb-o.tuyo{color:var(--accent);font-weight:700}
+.pb-det{grid-column:1/-1;margin:-1px 0 3px;color:var(--muted);font-size:11.5px;padding-left:2px}
+.pp-alt{display:grid;gap:4px;margin:0 0 8px}
+.pp-alt .fila{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(60px,110px) 34px;gap:8px;align-items:center;font-size:12.5px}
+.pp-alt .fila .btn{font-family:var(--mono);font-size:12px;padding:3px 8px;justify-content:flex-start;overflow:hidden;text-overflow:ellipsis}
+.pp-alt .fila.yo .btn{border-color:var(--c,var(--accent));font-weight:700}
+.pp-alt .pos{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.pp-cmp{display:grid;gap:6px;margin:4px 0 8px}
+.pp-cmp select{padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:12.5px var(--mono)}
+.pp-tabla{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.pp-tabla th,.pp-tabla td{padding:3px 6px;border-bottom:1px solid var(--line);text-align:right}
+.pp-tabla th:first-child,.pp-tabla td:first-child{text-align:left}
+.pp-tabla td.gana{font-weight:700;color:var(--c-clustering)}
+.pp-tabla tr.blq td{color:var(--muted);font-weight:650;text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;padding-top:8px}
+.pp-pesos{display:grid;gap:4px;padding:6px 10px 10px}
+.pp-pesos label{display:grid;grid-template-columns:minmax(0,1fr) 120px 22px;gap:8px;align-items:center;font-size:12px}
+.pp-pesos input{accent-color:var(--accent)}
+.pp-nota{font-size:11.5px;color:var(--muted);margin:4px 0 0}
+@media (max-width:520px){ .pp-pc{grid-template-columns:1fr} .pb{grid-template-columns:minmax(90px,1fr) minmax(50px,1fr) 30px} .pb-o{display:none} }
+
+/* panel plegado: queda una pestaña fina para volver a abrirlo */
+.cuerpo.sin-detalle .divisor::after{height:64px;margin-top:-32px;width:8px;left:3px;background:var(--accent)}
+:fullscreen .app,:-webkit-full-screen .app{min-height:0}
+
+@media (max-width:900px){
+  .top{flex-wrap:wrap} .ramas{order:5;flex-basis:100%}
+  .tools{margin-left:0}
+  .app{height:auto}
+  .cuerpo,.cuerpo.sin-detalle{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(380px,62vh) auto}
+  .divisor{display:none} .cuerpo.sin-detalle .detalle{display:block}
+  .detalle{overflow:visible}
+}
+@media (prefers-reduced-motion:reduce){ .toast{transition:none} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><h1 id="titulo">Árbol</h1></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar…  ( / )" autocomplete="off" spellcheck="false" aria-label="Buscar">
+      <ul id="resultados" class="resultados" role="listbox" hidden></ul>
+    </div>
+    <nav class="ramas" id="chips" aria-label="Ramas"></nav>
+    <div class="tools">
+      <details class="filtros"><summary class="btn ic" title="Filtros">Filtros</summary>
+        <div class="pop">
+          <label class="chk"><input type="checkbox" id="soloSas"> Solo con equivalente SAS</label>
+          <label class="chk" title="Conceptos de método (estadística, actuarial, finanzas) que todavía no tienen una función en el árbol. Los normativos no cuentan: no se programan"><input type="checkbox" id="soloHuecos"> Solo huecos (sin código)</label>
+          <label class="chk" title="Conceptos marcados como prioritarios en el catálogo"><input type="checkbox" id="soloAlta"> Solo prioridad alta</label>
+          <p id="resumen"></p><p id="pista"></p>
+        </div></details>
+      <select class="perfil-sel" id="perfil" title="Perfil de proyecto: cuánto pesa cada propiedad al puntuar y ordenar las funciones" aria-label="Perfil de proyecto"></select>
+      <button class="btn ic" id="tema" type="button" title="Cambiar tema (auto / claro / oscuro)">◐</button>
+      <button class="btn ic" id="panelBtn" type="button" title="Plegar / desplegar el panel de la derecha (P)" aria-pressed="false">▤</button>
+      <button class="btn ic" id="pantalla" type="button" title="Pantalla completa (F)">⛶</button>
+    </div>
+  </header>
+  <main class="cuerpo">
+    <section class="lienzo">
+      <div class="migas" id="migas"></div>
+      <canvas id="mapa" role="img" aria-label="Mapa 3D del árbol de la estadística: el núcleo en el centro y las ramas orbitando a su alrededor. Arrastra para girar, rueda para acercar; las flechas del teclado también giran."></canvas>
+      <div class="mapa-ctrls">
+        <button class="btn ic" id="rot" type="button" title="Pausar / reanudar el movimiento" aria-pressed="false">⏸</button>
+        <button class="btn ic" id="vista" type="button" title="Vista general: volver al núcleo y recentrar">⌂</button>
+      </div>
+    </section>
+    <div class="divisor" id="divisor" role="separator" aria-orientation="vertical" tabindex="0"
+         title="Arrastra para cambiar el tamaño del mapa · doble clic: ocultar/mostrar el panel · flechas: ajustar" aria-label="Cambiar el ancho del panel de detalle"></div>
+    <aside class="detalle" id="detalle" aria-live="polite"></aside>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script type="application/json" id="datos">__DATOS__</script>
+<script>/*__DEMOS_JS__*/</script>
+<script>/*__MAPA3D_JS__*/</script>
+<script>
+(function () {
+'use strict';
+var DATA = JSON.parse(document.getElementById('datos').textContent);
+var $ = function (s) { return document.querySelector(s); };
+var NS = 'http://www.w3.org/2000/svg';
+var norm = function (s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
+var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+/* colores de las ramas de conceptos (los define el catálogo): claro / oscuro */
+(function () {
+  var css = '';
+  DATA.ramas.forEach(function (rm) {
+    if (!rm.color) return;
+    var id = String(rm.id).replace(/[^\w-]/g, '');
+    css += '.b-' + id + '{--c:' + esc(rm.color.claro) + '}' +
+      '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .b-' + id + '{--c:' + esc(rm.color.oscuro) + '}}' +
+      ':root[data-theme="dark"] .b-' + id + '{--c:' + esc(rm.color.oscuro) + '}';
+  });
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+})();
+var reducir = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- árbol ---------- */
+var root = {id: 'raiz', nombre: 'Árbol de la estadística', kind: 'raiz', hijos: [], depth: 0, parent: null};
+DATA.ramas.forEach(function (rm) {
+  var rn = {id: 'r-' + rm.id, rama: rm.id, nombre: rm.nombre, desc: rm.desc, kind: 'rama', hijos: [], parent: root, depth: 1, colorHex: rm.color ? rm.color.oscuro : null, grupo: rm.grupo || ''};
+  rm.modulos.forEach(function (md) {
+    var mn = {id: 'm-' + rm.id + '-' + md.id, rama: rm.id, nombre: md.nombre, desc: md.desc, archivo: md.archivo, kind: 'modulo', hijos: [], parent: rn, depth: 2};
+    md.items.forEach(function (it) {
+      var h = Object.assign({}, it, {rid: it.id, nid: 'f-' + it.id, rama: rm.id, kind: 'hoja', hijos: [], parent: mn, depth: 3, modulo: md.nombre, ramaNombre: rm.nombre});
+      h.id = 'f-' + it.id; mn.hijos.push(h);
+    });
+    rn.hijos.push(mn);
+  });
+  root.hijos.push(rn);
+});
+var porId = {}, hojas = [];
+(function reg(n) { porId[n.id] = n; if (n.kind === 'hoja') {
+  hojas.push(n);
+  n._h = {nombre: norm(n.nombre), desc: norm(n.desc), sas: norm(n.sas), origen: norm(n.origen), doc: norm(n.doc),
+          mod: norm(n.modulo + ' ' + n.ramaNombre), codigo: norm((n.codigo || n.texto || '').slice(0, 8000))};
+} n.hijos.forEach(reg); })(root);
+/* hueco = concepto de método sin función en el árbol (los normativos no se programan: no son huecos) */
+function esHueco(h) { return h.tipo === 'concepto' && !(h.funciones || []).length && h.ambito !== 'normativo'; }
+var AMBITOS = {metodologico: 'Método estadístico', actuarial: 'Actuarial', financiero: 'Financiero', normativo: 'Normativo'};
+var porNombre = {}; hojas.forEach(function (h) { porNombre[h.rid] = h; });
+var conceptosDe = {};   /* nombre de función -> conceptos que la citan */
+hojas.forEach(function (h) { (h.funciones || []).forEach(function (f) { (conceptosDe[f] = conceptosDe[f] || []).push(h); }); });
+var demosDe = {};      /* función o concepto -> demos que lo explican */
+hojas.forEach(function (h) { if (h.tipo !== 'demo') return;
+  (h.relFunciones || []).concat(h.relConceptos || []).forEach(function (k) { (demosDe[k] = demosDe[k] || []).push(h); }); });
+function botonesDemo(clave) { var ds = demosDe[clave] || []; if (!ds.length) return '';
+  return '<h3>Demo interactiva</h3><div class="enlaces">' + ds.map(function (k) {
+    return '<button class="btn" type="button" data-ir="' + esc(k.rid) + '">▶ ' + esc(k.nombre) + '</button>'; }).join('') + '</div>'; }
+function cuenta(n) { return n.kind === 'hoja' ? 1 : n.hijos.reduce(function (a, c) { return a + cuenta(c); }, 0); }
+
+/* ---------- mapa 3D (el motor está en visor/mapa3d.js; aquí solo se conecta con el resto del visor) ----------
+   Núcleo = el árbol; ramas = nodos con anillo que orbitan; módulos y hojas = puntos alrededor de su rama.
+   `focus` es el nivel en el que estamos (raíz, rama o módulo); la cámara vuela hasta él. */
+var focus = root, sel = null, query = '', soloSas = false, soloHuecos = false, soloAlta = false, coincide = null, conCoincidencia = {};
+function esDesc(n, a) { for (var p = n; p; p = p.parent) if (p === a) return true; return false; }
+function moduloPrincipal(rn) {      /* el «planeta» de la rama: su módulo con más elementos */
+  return rn.hijos.reduce(function (m, c) { return !m || c.hijos.length > m.hijos.length ? c : m; }, null) || rn;
+}
+function clicNodo(n, ev) {
+  var ctrl = !!(ev && (ev.ctrlKey || ev.metaKey));
+  if (n.kind === 'hoja') { seleccionar(n, false); if (focus !== n.parent) ir(n.parent); return; }
+  if (n.kind === 'raiz') { if (focus !== root) ir(root); return; }
+  if (ctrl && n.kind === 'rama') { var mp = moduloPrincipal(n); if (mp !== focus) ir(mp); return; }   /* Ctrl+clic: directo al módulo principal */
+  if (n === focus) { ir(focus.parent || root); return; }
+  ir(n);
+  if ((n.kind === 'modulo' || n.kind === 'rama') && typeof detalleGrupoFunciones === 'function') detalleGrupoFunciones(n);
+}
+var mapa = crearMapa3D({
+  canvas: $('#mapa'), root: root, hojas: hojas, esDesc: esDesc, reducir: reducir,
+  estado: function () { return {focus: focus, sel: sel, filtrando: !!(query || soloSas || soloHuecos || soloAlta), coincide: coincide || {}, conCoincidencia: conCoincidencia}; },
+  alNodo: clicNodo,
+  alFondo: function () { if (focus.parent) ir(focus.parent); }
+});
+function ir(n, instante) { focus = n; mapa.ir(n, instante); migas(); }
+function pintar() { mapa.pintar(); }
+window.arbolDebug = {mapa: mapa, ir: ir, root: root};      /* para medir el rendimiento desde la consola: arbolDebug.mapa.perfil(60, 0.5) */
+function medir() { mapa.medir(); }
+if (window.ResizeObserver) new ResizeObserver(medir).observe($('#mapa')); else window.addEventListener('resize', medir);
+(function () {
+  var b = $('#rot');
+  function texto() { var mov = mapa.rotacion(); b.textContent = mov ? '⏸' : '▶'; b.setAttribute('aria-pressed', String(!mov)); }
+  b.onclick = function () { mapa.rotacion(!mapa.rotacion()); texto(); }; texto();
+  $('#vista').onclick = function () { mapa.recentrar(); ir(root); };
+})();
+
+/* ---------- divisor: cambiar el ancho del mapa / panel ---------- */
+(function () {
+  var cuerpo = document.querySelector('.cuerpo'), div = $('#divisor'), MIN = 280, ancho = 430, oculto = false;
+  try { var g = parseInt(localStorage.getItem('arbol-ancho-det'), 10); if (g > 0) ancho = g; oculto = localStorage.getItem('arbol-sin-detalle') === '1'; } catch (e) {}
+  function maximo() { return Math.max(MIN, cuerpo.getBoundingClientRect().width - 320); }
+  function aplicar(guardar) {
+    ancho = Math.round(Math.min(Math.max(ancho, MIN), maximo()));
+    cuerpo.style.setProperty('--ancho-det', ancho + 'px'); cuerpo.classList.toggle('sin-detalle', oculto);
+    div.setAttribute('aria-valuenow', oculto ? 0 : ancho);
+    var pb = document.getElementById('panelBtn'); if (pb) pb.setAttribute('aria-pressed', String(oculto));
+    if (guardar) try { localStorage.setItem('arbol-ancho-det', ancho); localStorage.setItem('arbol-sin-detalle', oculto ? '1' : '0'); } catch (e) {}
+  }
+  div.addEventListener('pointerdown', function (ev) {
+    ev.preventDefault();
+    if (oculto) { oculto = false; aplicar(true); return; }            /* panel plegado: un clic en la pestaña lo abre */
+    div.setPointerCapture(ev.pointerId); div.classList.add('arrastrando');
+    function mover(e) { var r = cuerpo.getBoundingClientRect(); oculto = false; ancho = r.right - 16 - e.clientX - 7; aplicar(false); }
+    function soltar() { div.classList.remove('arrastrando'); div.removeEventListener('pointermove', mover); div.removeEventListener('pointerup', soltar); aplicar(true); }
+    div.addEventListener('pointermove', mover); div.addEventListener('pointerup', soltar);
+  });
+  div.addEventListener('dblclick', function () { oculto = !oculto; aplicar(true); });
+  div.addEventListener('keydown', function (ev) {
+    if (ev.key === 'ArrowLeft') { oculto = false; ancho += 40; } else if (ev.key === 'ArrowRight') { ancho -= 40; } else if (ev.key === 'Enter') { oculto = !oculto; } else return;
+    ev.preventDefault(); aplicar(true);
+  });
+  window.addEventListener('resize', function () { aplicar(false); });
+  aplicar(false);
+  window.mostrarDetalle = function () { if (oculto) { oculto = false; aplicar(true); } };
+  window.alternarDetalle = function () { oculto = !oculto; aplicar(true); };
+})();
+
+/* ---------- migas, chips y cabecera ---------- */
+function migas() {
+  var cam = []; for (var p = focus; p; p = p.parent) cam.unshift(p);
+  var m = $('#migas'); m.innerHTML = '';
+  cam.forEach(function (n, i) {
+    if (i) { var s = document.createElement('span'); s.textContent = '›'; m.appendChild(s); }
+    if (n === focus) { var a = document.createElement('span'); a.className = 'act'; a.textContent = n.nombre; m.appendChild(a); }
+    else { var b = document.createElement('button'); b.type = 'button'; b.textContent = n.nombre; b.onclick = function () { ir(n); }; m.appendChild(b); }
+  });
+  Array.prototype.forEach.call($('#chips').children, function (c) { c.setAttribute('aria-pressed', String(esDesc(focus, porId[c.dataset.id]) )); });
+}
+var nCon = hojas.filter(function (h) { return h.tipo === 'concepto'; }), nHuecos = nCon.filter(esHueco).length;
+$('#resumen').textContent = hojas.filter(function (h) { return h.tipo === 'funcion'; }).length + ' funciones · ' + nCon.length + ' conceptos (' + nHuecos + ' huecos) · ' + hojas.filter(function (h) { return h.tipo === 'demo'; }).length + ' demos · ' + DATA.pruebas + ' pruebas · generado ' + DATA.generado;
+root.hijos.forEach(function (rn) {
+  var b = document.createElement('button'); b.type = 'button'; b.className = 'chip b-' + rn.rama; b.dataset.id = rn.id;
+  b.innerHTML = '<i style="background:var(--c)"></i>' + esc(rn.nombre) + ' <b>' + cuenta(rn) + '</b>';
+  b.onclick = function () { var dst = focus === rn ? root : rn; ir(dst); if (dst === rn) detalleGrupoFunciones(rn); }; $('#chips').appendChild(b);
+});
+$('#pista').textContent = 'El núcleo es el árbol; los nodos con anillo son las ramas y orbitan a su alrededor. Arrastra para girar, rueda para acercar, clic en una rama para entrar y ver sus módulos (Ctrl+clic: salta directo a su módulo principal); clic en el vacío o en las migas para volver. Los arcos unen conceptos con las funciones que los implementan. Puntos sólidos = funciones o conceptos con código; punteados = conceptos aún sin código. Arrastra la barra de la derecha para agrandar el mapa (doble clic la oculta). «Cómo funciona» tiene demos interactivas.';
+$('#titulo').title = 'Árbol de la estadística · ' + $('#resumen').textContent;
+$('#panelBtn').addEventListener('click', function () { window.alternarDetalle(); });
+function pantallaCompleta() {
+  var d = document, el = d.documentElement;
+  if (!(d.fullscreenElement || d.webkitFullscreenElement)) { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); }
+  else { (d.exitFullscreen || d.webkitExitFullscreen).call(d); }
+}
+$('#pantalla').addEventListener('click', pantallaCompleta);
+document.addEventListener('fullscreenchange', function () { $('#pantalla').setAttribute('aria-pressed', String(!!document.fullscreenElement)); });
+document.addEventListener('keydown', function (ev) {
+  var t = ev.target && ev.target.tagName; if (t === 'INPUT' || t === 'SELECT' || t === 'TEXTAREA' || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+  if (ev.key === 'f' || ev.key === 'F') { ev.preventDefault(); pantallaCompleta(); }
+  else if (ev.key === 'p' || ev.key === 'P') { ev.preventDefault(); window.alternarDetalle(); }
+});
+
+/* ---------- búsqueda ---------- */
+function puntuar(n, tokens) {
+  var tot = 0, h = n._h;
+  for (var i = 0; i < tokens.length; i++) {
+    var t = tokens[i], s = 0;
+    if (h.nombre.indexOf(t) >= 0) s += 6 + (h.nombre.indexOf(t) === 0 ? 2 : 0);
+    if (h.sas.indexOf(t) >= 0) s += 4;
+    if (h.desc.indexOf(t) >= 0) s += 3;
+    if (h.origen.indexOf(t) >= 0) s += 2;
+    if (h.mod.indexOf(t) >= 0) s += 1.5;
+    if (h.doc.indexOf(t) >= 0) s += 1.5;
+    if (h.codigo.indexOf(t) >= 0) s += .5;
+    if (!s) return 0; tot += s;
+  }
+  return tot;
+}
+var resultados = [], idxRes = -1;
+function buscar() {
+  query = $('#q').value.trim(); soloSas = $('#soloSas').checked; soloHuecos = $('#soloHuecos').checked; soloAlta = $('#soloAlta').checked;
+  var tokens = norm(query).split(/\s+/).filter(Boolean);
+  coincide = {}; conCoincidencia = {}; resultados = [];
+  hojas.forEach(function (h) {
+    var okSas = (!soloSas || (h.sas && h.sas !== '—' && h.sas.trim() !== '')) && (!soloHuecos || esHueco(h)) && (!soloAlta || h.prioridad === 'alta');
+    var sc = tokens.length ? puntuar(h, tokens) : 1;
+    if (okSas && sc > 0) { coincide[h.id] = sc; resultados.push({n: h, s: sc});
+      for (var p = h.parent; p; p = p.parent) conCoincidencia[p.id] = (conCoincidencia[p.id] || 0) + 1; }
+  });
+  resultados.sort(function (a, b) { return b.s - a.s || a.n.nombre.localeCompare(b.n.nombre); });
+  var ul = $('#resultados'); ul.innerHTML = ''; idxRes = -1;
+  if (query) {
+    if (!resultados.length) { var li = document.createElement('li'); li.className = 'vacio'; li.textContent = 'Sin resultados para «' + query + '». Prueba con el nombre de un PROC de SAS o un concepto (p. ej. odds, VIF, chi).'; ul.appendChild(li); }
+    resultados.slice(0, 12).forEach(function (r, i) {
+      var li = document.createElement('li'); li.setAttribute('role', 'option'); li.dataset.i = i;
+      li.innerHTML = '<span class="pt b-' + r.n.rama + '" style="background:var(--c)"></span><span class="n">' + esc(r.n.nombre) + '</span><span class="d">' + esc(r.n.ramaNombre + ' · ' + (r.n.desc || '')) + '</span>';
+      li.onmousedown = function (ev) { ev.preventDefault(); elegir(r.n); };
+      ul.appendChild(li);
+    });
+    if (resultados.length > 12) { var mas = document.createElement('li'); mas.className = 'vacio'; mas.textContent = '+ ' + (resultados.length - 12) + ' más: los nodos resaltados en el mapa los muestran todos.'; ul.appendChild(mas); }
+    ul.hidden = false;
+  } else ul.hidden = true;
+  pintar();
+}
+function marcar(i) {
+  var lis = $('#resultados').querySelectorAll('li[role=option]'); if (!lis.length) return;
+  idxRes = (i + lis.length) % lis.length;
+  lis.forEach(function (l, j) { l.setAttribute('aria-selected', String(j === idxRes)); }); lis[idxRes].scrollIntoView({block: 'nearest'});
+}
+function elegir(n) { $('#resultados').hidden = true; seleccionar(n, true); }
+$('#q').addEventListener('input', buscar);
+$('#q').addEventListener('focus', function () { if (query) $('#resultados').hidden = false; });
+$('#q').addEventListener('blur', function () { setTimeout(function () { $('#resultados').hidden = true; }, 120); });
+$('#q').addEventListener('keydown', function (ev) {
+  if (ev.key === 'ArrowDown') { ev.preventDefault(); marcar(idxRes + 1); }
+  else if (ev.key === 'ArrowUp') { ev.preventDefault(); marcar(idxRes - 1); }
+  else if (ev.key === 'Enter') { var r = resultados[idxRes >= 0 ? idxRes : 0]; if (r) { ev.preventDefault(); elegir(r.n); } }
+  else if (ev.key === 'Escape') { this.value = ''; buscar(); this.blur(); }
+});
+$('#soloSas').addEventListener('change', buscar); $('#soloAlta').addEventListener('change', buscar);
+$('#soloHuecos').addEventListener('change', buscar);
+document.addEventListener('keydown', function (ev) {
+  var t = ev.target && ev.target.tagName;
+  if (ev.key === '/' && t !== 'INPUT') { ev.preventDefault(); $('#q').focus(); $('#q').select(); }
+  else if (ev.key === 'Escape' && t !== 'INPUT') { if (sel) { sel = null; detalleVacio(); pintar(); } else if (focus.parent) ir(focus.parent); }
+});
+
+/* ---------- selección y detalle ---------- */
+function raizLocal() {
+  if (location.protocol === 'file:') {
+    var p = decodeURIComponent(location.pathname).replace(/^\/([A-Za-z]:)/, '$1'); return p.replace(/\/[^\/]*$/, '');
+  }
+  return DATA.raiz;
+}
+function rutaAbs(rel) { var r = raizLocal(), win = /^[A-Za-z]:|\\/.test(r), base = r.replace(/[\\\/]+$/, ''); return win ? base.replace(/\//g, '\\') + '\\' + rel.replace(/\//g, '\\') : base + '/' + rel; }
+function urlVsCode(rel, linea) { return 'vscode://file/' + encodeURI(rutaAbs(rel).replace(/\\/g, '/')) + ':' + (linea || 1); }
+function resaltar(src) {
+  var re = /(#[^\n]*)|("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*')|\b(def|return|import|from|if|else|elif|for|in|while|try|except|raise|with|as|and|or|not|is|None|True|False|lambda|class|yield|continue|break|pass)\b|\b(\d+\.?\d*)\b/g;
+  var out = '', last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    var cl = m[1] ? 'c' : m[2] ? 's' : m[3] ? 'k' : 'num';
+    out += '<span class="' + cl + '">' + esc(m[0]) + '</span>'; last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+function copiar(texto, msg) {
+  function ok() { aviso(msg || 'Copiado'); }
+  function plan_b() {
+    var ta = document.createElement('textarea'); ta.value = texto; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); ok(); } catch (e) { aviso('No se pudo copiar: selecciona el texto manualmente'); } document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(ok, plan_b); else plan_b();
+}
+var tmo; function aviso(t) { var e = $('#toast'); e.textContent = t; e.classList.add('on'); clearTimeout(tmo); tmo = setTimeout(function () { e.classList.remove('on'); }, 1600); }
+
+function detalleVacio() {
+  var d = $('#detalle');
+  d.innerHTML = '<div class="vacio-det"><h2>Elige un nodo</h2><ul>' +
+    '<li>El <b>núcleo</b> es el árbol entero; las <b>ramas</b> (nodos con anillo) orbitan a su alrededor. Arrastra para girar, rueda para acercar y haz clic en una rama para entrar.</li>' +
+    '<li>Cada <b>punto</b> es una función (más grande = más código) o un <b>concepto</b> del máster, de Very Normal o de los manuales. Los punteados aún no tienen código: son huecos por rellenar. Los arcos unen cada concepto con las funciones que lo implementan.</li>' +
+    '<li>Cada función tiene una <b>ficha de propiedades</b> (barras de 0 a 10: insesgadez, consistencia, eficiencia, potencia… y escalabilidad, velocidad, memoria…). Elige arriba el <b>perfil de proyecto</b> (cartera grande, pocos datos, regulatorio…) y se reordenan las alternativas. Pulsa una rama o un módulo para ver su media.</li>' +
+    '<li>En <b>Cómo funciona</b> hay demos interactivas (distribuciones básicas animadas y en galería, t-test, potencia, FDR, IC, TCL, regresión, logística, censura).</li>' +
+    '<li>Con <b>/</b> buscas por nombre, concepto o PROC de SAS.</li></ul>' +
+    '<h3>Búsquedas rápidas</h3><div class="rapidas"></div></div>';
+  ['odds ratio', 'VIF', 'chi cuadrado', 'potencia', 'Kaplan', 'gráfico ROC', 'FDR', 'PROC LOGISTIC', 'Very Normal', 'bootstrap', 'Solvencia', 'Markov'].forEach(function (q) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = q;
+    b.onclick = function () { $('#q').value = q; buscar(); $('#q').focus(); }; d.querySelector('.rapidas').appendChild(b);
+  });
+}
+function seleccionar(n, zoom) {
+  if (window.mostrarDetalle) window.mostrarDetalle();
+  vistaModulo = null;
+  sel = n; if (zoom) ir(n.parent); else pintar();
+  try { history.replaceState(null, '', '#' + n.rid); } catch (e) {}
+  var d = $('#detalle'), esFn = n.tipo === 'funcion', esDoc = n.tipo === 'doc';
+  if (n.tipo === 'concepto') { detalleConcepto(n, d); return; }
+  if (n.tipo === 'demo') { detalleDemo(n, d); return; }
+  var h = '<div class="det-cab b-' + n.rama + '"><i></i><span>' + esc(n.ramaNombre) + ' › ' + esc(n.modulo) + '</span></div>' +
+    '<h2>' + esc(n.nombre) + '</h2>' + (n.desc ? '<p class="desc">' + esc(n.desc) + '</p>' : '');
+  var meta = '';
+  if (n.sas) meta += '<dt>Equivale a SAS</dt><dd>' + esc(n.sas) + '</dd>';
+  if (n.origen) meta += '<dt>Origen</dt><dd>' + esc(n.origen) + '</dd>';
+  meta += '<dt>Archivo</dt><dd><code>' + esc(n.archivo) + (esFn ? ':' + n.linea : '') + '</code></dd>';
+  h += '<dl class="meta">' + meta + '</dl>';
+  if (n.aviso) h += '<p class="aviso"><b>Ojo:</b> ' + esc(n.aviso) + '</p>';
+  h += '<div class="acciones">';
+  if (esFn) h += '<button class="btn primario" data-a="codigo" type="button">Copiar código</button><button class="btn" data-a="import" type="button">Copiar import</button><button class="btn" data-a="llamada" type="button">Copiar uso</button>';
+  else if (esDoc) h += '<button class="btn primario" data-a="texto" type="button">Copiar texto</button>';
+  else h += '<button class="btn primario" data-a="codigo" type="button">Copiar script</button>';
+  h += '<a class="btn" href="' + esc(urlVsCode(n.archivo, n.linea)) + '" title="Abre el archivo en VS Code (si no abre, copia la ruta)">Abrir en VS Code</a><button class="btn" data-a="ruta" type="button">Copiar ruta</button></div>';
+  if (esFn && (conceptosDe[n.nombre] || []).length) {
+    h += '<h3>Conceptos relacionados</h3><div class="enlaces">' + conceptosDe[n.nombre].map(function (k) {
+      return '<button class="btn" type="button" data-ir="' + esc(k.rid) + '">' + esc(k.nombre) + '</button>'; }).join('') + '</div>';
+  }
+  if (esFn) h += botonesDemo(n.nombre);
+  if (esFn) h += htmlPropiedades(n);
+  if (esFn) {
+    var uso = n.importar + '\n\nresultado = ' + n.llamada + (n.opcionales ? '\n# opcionales: ' + n.opcionales : '');
+    n._uso = uso;
+    h += '<h3>Uso</h3><pre class="cod">' + resaltar(uso) + '</pre>';
+    if ((n.ejemplo || []).length) h += '<h3>Probar con datos simulados</h3><div class="nb" id="nb"></div>';
+    h += '<h3>Documentación</h3><pre class="doc">' + esc(n.doc || '(sin docstring)') + '</pre>';
+    h += '<h3>Código · ' + n.lineas + ' líneas</h3><pre class="cod">' + resaltar(n.codigo) + '</pre>';
+  } else if (esDoc) h += '<h3>Contenido</h3><pre class="doc">' + esc(n.texto) + '</pre>';
+  else h += '<h3>Código · ' + n.lineas + ' líneas</h3><pre class="cod">' + resaltar(n.codigo) + '</pre>';
+  d.innerHTML = h; d.scrollTop = 0;
+  if (esFn && (n.ejemplo || []).length) cuaderno(n, d.querySelector('#nb'));
+  if (esFn) { enlazarComparador(n, d); enlazarPesos(d); }
+  d.onclick = function (ev) {
+    var go = ev.target.closest('button[data-ir]'); if (go && porNombre[go.dataset.ir]) { seleccionar(porNombre[go.dataset.ir], true); return; }
+    var b = ev.target.closest('button[data-a]'); if (!b) return; var a = b.dataset.a;
+    if (a === 'codigo') copiar(n.codigo, 'Código copiado'); else if (a === 'import') copiar(n.importar, 'Import copiado');
+    else if (a === 'llamada') copiar(n._uso, 'Uso copiado'); else if (a === 'texto') copiar(n.texto, 'Texto copiado');
+    else if (a === 'ruta') copiar(rutaAbs(n.archivo), 'Ruta copiada');
+  };
+}
+
+
+/* ---------- «Probar»: cuaderno por celdas (se ejecuta en Python a través de la app, py/arbol_app.pyw) ---------- */
+var sesionesNB = {};          /* función -> nº de celdas ya ejecutadas en la sesión de Python */
+window.addEventListener('pywebviewready', function () { document.querySelectorAll('.nb-nota').forEach(function (e) { e.remove(); }); });
+function hayPython() { return !!(window.pywebview && window.pywebview.api && window.pywebview.api.ejecutar); }
+function cuaderno(n, caja) {
+  var ses = 'fn:' + n.rid, celdas = n.ejemplo.slice(), eds = [], sals = [], ocupado = false;
+  var barra = document.createElement('div'); barra.className = 'nb-barra'; caja.appendChild(barra);
+  function boton(t, fn, tit) { var b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = t; if (tit) b.title = tit; b.onclick = fn; barra.appendChild(b); return b; }
+  boton('▶ Ejecutar todo', function () { correrHasta(celdas.length - 1); }, 'Ejecuta todas las celdas en orden');
+  boton('↺ Reiniciar', function () { if (hayPython()) window.pywebview.api.reiniciar(ses); sesionesNB[ses] = 0; sals.forEach(function (s) { s.innerHTML = ''; }); estado('Sesión reiniciada.'); }, 'Borra las variables y empieza de cero');
+  boton('Copiar todo', function () { copiar(eds.map(function (e) { return e.value; }).join('\n\n'), 'Celdas copiadas'); });
+  var est = document.createElement('span'); est.className = 'nb-estado'; barra.appendChild(est);
+  function estado(t) { est.textContent = t; }
+  if (!hayPython()) {
+    var nota = document.createElement('p'); nota.className = 'nb-nota';
+    nota.textContent = 'Para ejecutar las celdas abre el árbol desde su acceso directo (la app). Aquí puedes leerlas, editarlas y copiarlas a tu notebook.';
+    caja.appendChild(nota);
+  }
+  celdas.forEach(function (c, i) {
+    var cel = document.createElement('div'); cel.className = 'nb-celda';
+    var cab = document.createElement('div'); cab.className = 'nb-cab';
+    var et = document.createElement('span'); et.textContent = i === 0 ? '[datos simulados]' : '[' + i + ']'; cab.appendChild(et);
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = '▶'; b.title = 'Ejecutar esta celda (Ctrl+Enter)';
+    b.onclick = function () { correrHasta(i); }; cab.appendChild(b);
+    var ed = document.createElement('textarea'); ed.className = 'nb-ed'; ed.spellcheck = false; ed.value = c;
+    ed.rows = Math.min(Math.max(c.split('\n').length, 2), 16);
+    ed.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' && (ev.ctrlKey || ev.shiftKey)) { ev.preventDefault(); correrHasta(i); }
+      else if (ev.key === 'Tab') { ev.preventDefault(); var p = ed.selectionStart; ed.setRangeText('    ', p, ed.selectionEnd, 'end'); }
+    });
+    var sal = document.createElement('div'); sal.className = 'nb-sal';
+    cel.appendChild(cab); cel.appendChild(ed); cel.appendChild(sal); caja.appendChild(cel); eds.push(ed); sals.push(sal);
+  });
+  function pintarSalida(sal, r) {
+    sal.innerHTML = '';
+    function pre(t, cls) { var p = document.createElement('pre'); if (cls) p.className = cls; p.textContent = t; sal.appendChild(p); }
+    if (r.salida) pre(r.salida);
+    if (r.html) { var dv = document.createElement('div'); dv.innerHTML = r.html; sal.appendChild(dv); }
+    if (r.texto) pre(r.texto);
+    (r.imagenes || []).forEach(function (b64) { var im = document.createElement('img'); im.alt = 'gráfico'; im.src = 'data:image/png;base64,' + b64; sal.appendChild(im); });
+    if (r.error) pre(r.error, 'err');
+  }
+  async function correrHasta(i) {
+    if (!hayPython()) { estado('Abre el árbol desde la app para ejecutar.'); return; }
+    if (ocupado) return; ocupado = true;
+    var desde = Math.min(sesionesNB[ses] || 0, i);        /* ejecuta antes las celdas previas que falten */
+    try {
+      for (var k = desde; k <= i; k++) {
+        estado('Ejecutando celda ' + (k === 0 ? 'de datos' : k) + '…'); sals[k].innerHTML = '<pre>…</pre>';
+        var r = await window.pywebview.api.ejecutar(ses, eds[k].value);
+        pintarSalida(sals[k], r || {error: 'Sin respuesta de Python'});
+        if (r && r.error) { sesionesNB[ses] = k; estado('Error en la celda ' + k + '.'); return; }
+        sesionesNB[ses] = k + 1;
+      }
+      estado('Hecho.');
+    } catch (e) { estado('Fallo al ejecutar: ' + e); }
+    finally { ocupado = false; }
+  }
+}
+
+function detalleConcepto(n, d) {
+  var fn = n.funciones || [], hueco = !fn.length;
+  var h = '<div class="det-cab b-' + n.rama + '"><i></i><span>' + esc(n.ramaNombre) + ' › ' + esc(n.modulo) + '</span></div>' +
+    '<h2 class="sans">' + esc(n.nombre) + '</h2>' +
+    '<span class="estado b-' + n.rama + (hueco ? '' : ' con') + '">' + (!hueco ? 'Con código en el árbol' : n.ambito === 'normativo' ? 'Normativo: no se programa' : 'Hueco: concepto sin código en el árbol') + '</span>' +
+    (n.ambito && n.ambito !== 'normativo' && AMBITOS[n.ambito] ? ' <span class="estado">' + esc(AMBITOS[n.ambito]) + '</span>' : '') +
+    (n.prioridad === 'alta' ? ' <span class="estado">Prioridad alta</span>' : '') +
+    '<p class="desc">' + esc(n.desc) + '</p>';
+  if ((n.sinonimos || []).length) h += '<dl class="meta"><dt>También</dt><dd>' + esc(n.sinonimos.join(', ')) + '</dd></dl>';
+  var demoIn = (demosDe[n.rid] || [])[0];
+  if (demoIn) h += '<h3>' + esc(demoIn.nombre) + '</h3><div class="dm" id="demoIn"></div>';
+  if ((n.ejemplo || []).length) h += '<h3>Probar con datos simulados</h3><div class="nb" id="nb"></div>';
+  if (fn.length) h += '<h3>Funciones del árbol</h3><div class="enlaces">' + fn.map(function (f) {
+    var pt = porNombre[f] ? puntuacion(porNombre[f]) : null;
+    return porNombre[f] ? '<button class="btn" type="button" data-ir="' + esc(f) + '" title="Puntuación con el perfil ' + esc(perfilActual().nombre) + '">' + esc(f) + (pt ? ' · ' + fmt(pt.valor) : '') + '</button>' : ''; }).join('') + '</div>';
+  else if (n.ambito === 'normativo') h += '<p class="aviso" style="background:var(--surface-2);color:var(--ink)">Concepto normativo o contable: sirve para estudiar y consultar; no hace falta una función en el árbol.</p>';
+  else h += '<p class="aviso" style="background:var(--surface-2);color:var(--ink)">Todavía no hay función para este concepto. Si te hace falta, pídeselo a Claude con «añade <i>' + esc(n.nombre) + '</i> al árbol».</p>';
+  h += botonesDemo(n.rid);
+  h += '<h3>Dónde aparece</h3><ul class="fuentes">' + (n.fuentes || []).map(function (f) {
+    var vn = f.tipo === 'very_normal';
+    return '<li><span class="tag' + (vn ? ' vn' : '') + '">' + (vn ? 'Very Normal' : f.tipo === 'master' ? 'Máster' : f.tipo === 'manual' ? 'Manual' : 'Árbol (consultoría)') + '</span>' +
+      (f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.ref) + '</a>' : '<span>' + esc(f.ref) + '</span>') +
+      (f.base ? '<span class="base">' + esc(f.base) + '</span>' : '') + '</li>'; }).join('') + '</ul>';
+  h += '<div class="acciones"><button class="btn primario" data-a="nota" type="button">Copiar nota para Claude</button>' +
+    '<a class="btn" href="' + esc(urlVsCode(n.archivo, 1)) + '" title="Abre el catálogo de conceptos en VS Code">Abrir catálogo en VS Code</a></div>';
+  d.innerHTML = h; d.scrollTop = 0;
+  if (demoIn && typeof DEMOS !== 'undefined' && DEMOS[demoIn.rid]) {
+    try { DEMOS[demoIn.rid](d.querySelector('#demoIn'), {concepto: n.rid}); } catch (e) { d.querySelector('#demoIn').textContent = 'La demo falló: ' + e.message; }
+  }
+  if ((n.ejemplo || []).length) cuaderno(n, d.querySelector('#nb'));
+  d.onclick = function (ev) {
+    var go = ev.target.closest('button[data-ir]'); if (go && porNombre[go.dataset.ir]) { seleccionar(porNombre[go.dataset.ir], true); return; }
+    var b = ev.target.closest('button[data-a="nota"]'); if (!b) return;
+    copiar('Concepto: ' + n.nombre + '\n' + n.desc + '\nFunciones del árbol: ' + (fn.length ? fn.join(', ') : 'ninguna todavía') +
+      '\nFuentes: ' + (n.fuentes || []).map(function (f) { return f.ref; }).join('; '), 'Nota copiada');
+  };
+}
+
+function detalleDemo(n, d) {
+  var h = '<div class="det-cab b-' + n.rama + '"><i></i><span>' + esc(n.ramaNombre) + ' › ' + esc(n.modulo) + '</span></div>' +
+    '<h2 class="sans">' + esc(n.nombre) + '</h2><p class="desc">' + esc(n.desc) + '</p><div class="dm"></div>' +
+    '<h3>Qué aprender</h3><p class="aprende b-' + n.rama + '">' + esc(n.aprender) + '</p>';
+  if ((n.relFunciones || []).length) h += '<h3>Funciones del árbol</h3><div class="enlaces">' + n.relFunciones.map(function (f) {
+    return porNombre[f] ? '<button class="btn" type="button" data-ir="' + esc(f) + '">' + esc(f) + '</button>' : ''; }).join('') + '</div>';
+  if ((n.relConceptos || []).length) h += '<h3>Conceptos</h3><div class="enlaces">' + n.relConceptos.map(function (c) {
+    return porNombre[c] ? '<button class="btn" type="button" data-ir="' + esc(c) + '" style="font-family:var(--sans)">' + esc(porNombre[c].nombre) + '</button>' : ''; }).join('') + '</div>';
+  d.innerHTML = h; d.scrollTop = 0;
+  var caja = d.querySelector('.dm');
+  try { if (typeof DEMOS !== 'undefined' && DEMOS[n.rid]) DEMOS[n.rid](caja); else caja.textContent = 'Demo no disponible.'; }
+  catch (e) { caja.textContent = 'La demo falló: ' + e.message; if (window.console) console.error(e); }
+  d.onclick = function (ev) { var go = ev.target.closest('button[data-ir]'); if (go && porNombre[go.dataset.ir]) seleccionar(porNombre[go.dataset.ir], true); };
+}
+
+/* ---------- propiedades: barras 0-10, perfiles de proyecto, alternativas y comparador ---------- */
+var PROP = DATA.propiedades || {bloques: [], propiedades: [], perfiles: [], grupos: [], peso_por_defecto: 5};
+var propPorId = {}; PROP.propiedades.forEach(function (p) { propPorId[p.id] = p; });
+var grupoNombre = {}; (PROP.grupos || []).forEach(function (g) { grupoNombre[g.id] = g.nombre; });
+var fnPorGrupo = {};
+hojas.forEach(function (h) { if (h.tipo === 'funcion' && h.ficha && h.ficha.grupo) (fnPorGrupo[h.ficha.grupo] = fnPorGrupo[h.ficha.grupo] || []).push(h); });
+var perfilId = 'equilibrado', pesosMios = {}, vistaModulo = null;
+try { perfilId = localStorage.getItem('arbol-perfil') || perfilId; pesosMios = JSON.parse(localStorage.getItem('arbol-pesos-mios') || '{}') || {}; } catch (e) {}
+function perfilActual() {
+  if (perfilId === 'mio') return {id: 'mio', nombre: 'Personalizado', desc: 'Tus pesos (se guardan en este ordenador).', pesos: pesosMios};
+  for (var i = 0; i < PROP.perfiles.length; i++) if (PROP.perfiles[i].id === perfilId) return PROP.perfiles[i];
+  return PROP.perfiles[0] || {id: 'equilibrado', nombre: 'Equilibrado', pesos: {}};
+}
+function peso(pid) { var p = perfilActual().pesos || {}; return p[pid] != null ? +p[pid] : (PROP.peso_por_defecto == null ? 5 : PROP.peso_por_defecto); }
+function puntuacion(h) {
+  if (!h || !h.ficha) return null;
+  var s = 0, w = 0, n = 0, notas = h.ficha.notas;
+  Object.keys(notas).forEach(function (k) { var wk = peso(k); if (wk > 0) { s += wk * notas[k].nota; w += wk; n++; } });
+  return w ? {valor: s / w, n: n} : null;
+}
+function fmt(x) { return (Math.round(x * 10) / 10).toFixed(1); }
+function barra(v) { return '<span class="pb-barra' + (v < 4 ? ' bajo' : '') + '"><i style="width:' + Math.max(0, Math.min(100, v * 10)) + '%"></i></span>'; }
+function esGrafico(h) { return /^grafico_/.test(h.nombre); }
+function ordenGrupo(h) {
+  /* solo se ordenan funciones del mismo tipo: los gráficos no compiten con los cálculos */
+  var gs = (fnPorGrupo[h.ficha.grupo] || []).filter(function (x) { return esGrafico(x) === esGrafico(h); })
+    .map(function (x) { return {h: x, p: puntuacion(x)}; });
+  gs.sort(function (a, b) { return (b.p ? b.p.valor : -1) - (a.p ? a.p.valor : -1) || a.h.nombre.localeCompare(b.h.nombre); });
+  return gs;
+}
+(function () {
+  var s = $('#perfil'); if (!s) return;
+  PROP.perfiles.concat([{id: 'mio', nombre: 'Personalizado…'}]).forEach(function (p) {
+    var o = document.createElement('option'); o.value = p.id; o.textContent = 'Perfil: ' + p.nombre; if (p.desc) o.title = p.desc; s.appendChild(o);
+  });
+  if (!PROP.perfiles.some(function (p) { return p.id === perfilId; }) && perfilId !== 'mio') perfilId = 'equilibrado';
+  s.value = perfilId;
+  s.onchange = function () { perfilId = s.value; try { localStorage.setItem('arbol-perfil', perfilId); } catch (e) {} refrescarPropiedades(); };
+})();
+function refrescarPropiedades() {
+  if (sel && sel.tipo === 'funcion') seleccionar(sel, false);
+  else if (sel && sel.tipo === 'concepto') seleccionar(sel, false);
+  else if (vistaModulo) detalleGrupoFunciones(vistaModulo);
+}
+function filasBloque(bl, notas, opciones) {
+  var props = PROP.propiedades.filter(function (p) { return p.bloque === bl.id && notas[p.id]; });
+  if (!props.length) return '';
+  var s = 0, w = 0;
+  props.forEach(function (p) { var wk = peso(p.id); s += (wk || 0.0001) * notas[p.id].nota; w += (wk || 0.0001); });
+  var h = '<details class="pbloque"' + (opciones.abierto ? ' open' : '') + '><summary><span class="pb-t">' + esc(bl.nombre) + ' · ' + props.length + '</span>' + barra(s / w) + '<span class="pb-v">' + fmt(s / w) + '</span><span></span></summary><div class="pb-lista">';
+  props.forEach(function (p) {
+    var x = notas[p.id], wk = peso(p.id), org = x.origen || 'estimado';
+    var tit = p.def + (perfilActual().id !== 'equilibrado' ? '  ·  Peso en el perfil: ' + wk : '');
+    h += '<div class="pb' + (wk <= 2 ? ' poco' : '') + '"><span class="pb-n" title="' + esc(tit) + '">' + esc(p.nombre) + '</span>' + barra(x.nota) +
+      '<span class="pb-v">' + fmt(x.nota) + '</span><span class="pb-o ' + org + '"' + (x.detalle ? ' title="' + esc(x.detalle) + '"' : '') + '>' +
+      (opciones.media ? esc(x.cuantas + ' fn') : org) + '</span>' + (x.detalle && opciones.detalle ? '<span class="pb-det">' + esc(x.detalle) + '</span>' : '') + '</div>';
+  });
+  return h + '</div></details>';
+}
+function editorPesos() {
+  var h = '<details class="pbloque"><summary><span class="pb-t" style="grid-column:1/-1">Editar mis pesos (0 = no cuenta)</span></summary><div class="pp-pesos">';
+  PROP.bloques.forEach(function (bl) {
+    h += '<p class="pp-nota"><b>' + esc(bl.nombre) + '</b></p>';
+    PROP.propiedades.filter(function (p) { return p.bloque === bl.id; }).forEach(function (p) {
+      h += '<label title="' + esc(p.def) + '"><span>' + esc(p.nombre) + '</span><input type="range" min="0" max="10" step="1" data-peso="' + p.id + '" value="' + peso(p.id) + '"><b>' + peso(p.id) + '</b></label>';
+    });
+  });
+  return h + '<p class="pp-nota">Se guardan en este ordenador. Parte de los pesos del perfil equilibrado (todo a ' + (PROP.peso_por_defecto || 5) + ').</p></div></details>';
+}
+function enlazarPesos(caja) {
+  caja.querySelectorAll('input[data-peso]').forEach(function (inp) {
+    inp.addEventListener('input', function () { inp.nextElementSibling.textContent = inp.value; });
+    inp.addEventListener('change', function () {
+      pesosMios[inp.dataset.peso] = +inp.value; try { localStorage.setItem('arbol-pesos-mios', JSON.stringify(pesosMios)); } catch (e) {}
+      var abierto = caja.querySelector('.pp-pesos'); refrescarPropiedades();
+    });
+  });
+}
+function htmlPropiedades(n) {
+  var f = n.ficha; if (!f) return '';
+  var pf = perfilActual(), pt = puntuacion(n), alts = f.grupo ? ordenGrupo(n) : [], pos = 0;
+  alts.forEach(function (a, i) { if (a.h === n) pos = i + 1; });
+  var h = '<h3>Propiedades</h3><div class="pp-cab"><span class="pp-total">' + (pt ? fmt(pt.valor) : '–') + '<small> /10</small></span>' +
+    '<span class="pp-txt">Con el perfil <b>' + esc(pf.nombre) + '</b> · media ponderada de ' + (pt ? pt.n : 0) + ' propiedades</span>' +
+    '<span class="pp-txt">' + (alts.length > 1 ? 'Puesto <b>' + pos + ' de ' + alts.length + '</b> en «' + esc(grupoNombre[f.grupo] || f.grupo) + '»' : (pf.desc ? esc(pf.desc) : '')) + '</span></div>';
+  if ((f.pros || []).length || (f.contras || []).length) {
+    h += '<div class="pp-pc"><ul>' + (f.pros || []).map(function (x) { return '<li class="pro">' + esc(x) + '</li>'; }).join('') + '</ul>' +
+      '<ul>' + ((f.contras || []).length ? f.contras.map(function (x) { return '<li class="con">' + esc(x) + '</li>'; }).join('') : '<li class="con">—</li>') + '</ul></div>';
+  }
+  if ((f.usar_si && f.usar_si !== '—') || (f.evitar_si && f.evitar_si !== '—'))
+    h += '<dl class="pp-uso">' + (f.usar_si && f.usar_si !== '—' ? '<dt class="si">Úsala si</dt><dd>' + esc(f.usar_si) + '</dd>' : '') +
+      (f.evitar_si && f.evitar_si !== '—' ? '<dt class="no">Evítala si</dt><dd>' + esc(f.evitar_si) + '</dd>' : '') + '</dl>';
+  PROP.bloques.forEach(function (bl, i) { h += filasBloque(bl, f.notas, {abierto: true, detalle: true}); });
+  if (perfilId === 'mio') h += editorPesos();
+  h += '<p class="pp-nota"><b class="pb-o medido">medido</b> = benchmark o simulación (' + esc(PROP.medido || 'sin medir') + (PROP.equipo ? ', ' + esc(PROP.equipo) : '') + ') · estimado = criterio experto · <b class="pb-o tuyo">tuyo</b> = conceptos/fichas_mias.json. Las propiedades que no aplican no salen.</p>';
+  if (alts.length > 1) {
+    h += '<h3>Alternativas · ' + esc(grupoNombre[f.grupo] || f.grupo) + '</h3><div class="pp-alt">' + alts.map(function (a, i) {
+      return '<div class="fila' + (a.h === n ? ' yo' : '') + '"><span class="pos">' + (i + 1) + '</span><button class="btn" type="button" data-ir="' + esc(a.h.rid) + '">' + esc(a.h.nombre) + '</button>' +
+        (a.p ? barra(a.p.valor) + '<span class="pb-v">' + fmt(a.p.valor) + '</span>' : '<span></span><span></span>') + '</div>';
+    }).join('') + '</div>';
+  }
+  var otrosTipo = (fnPorGrupo[f.grupo] || []).filter(function (x) { return esGrafico(x) !== esGrafico(n); });
+  if (otrosTipo.length) h += '<h3>' + (esGrafico(n) ? 'Funciones de cálculo del mismo tema' : 'Gráficos del mismo tema') + '</h3><div class="enlaces">' +
+    otrosTipo.map(function (x) { return '<button class="btn" type="button" data-ir="' + esc(x.rid) + '">' + esc(x.nombre) + '</button>'; }).join('') + '</div>';
+  var otras = hojas.filter(function (x) { return x.tipo === 'funcion' && x !== n; });
+  var defecto = (alts.filter(function (a) { return a.h !== n; })[0] || {}).h;
+  h += '<h3>Comparar con otra función</h3><div class="pp-cmp"><select id="cmpSel" aria-label="Función para comparar"><option value="">— elige —</option>' +
+    (alts.length > 1 ? '<optgroup label="Alternativas">' + alts.filter(function (a) { return a.h !== n; }).map(function (a) { return '<option value="' + esc(a.h.rid) + '">' + esc(a.h.nombre) + '</option>'; }).join('') + '</optgroup>' : '') +
+    '<optgroup label="Todas">' + otras.map(function (x) { return '<option value="' + esc(x.rid) + '">' + esc(x.nombre) + '</option>'; }).join('') + '</optgroup></select>' +
+    '<div id="cmpOut"></div></div>';
+  n._cmpDefecto = defecto ? defecto.rid : '';
+  return h;
+}
+function tablaComparar(a, b) {
+  var pa = puntuacion(a), pb = puntuacion(b);
+  var h = '<table class="pp-tabla"><thead><tr><th>Propiedad</th><th>' + esc(a.nombre) + '</th><th>' + esc(b.nombre) + '</th></tr></thead><tbody>';
+  h += '<tr><td><b>Total (' + esc(perfilActual().nombre) + ')</b></td><td' + (pa && pb && pa.valor > pb.valor ? ' class="gana"' : '') + '>' + (pa ? fmt(pa.valor) : '–') + '</td><td' + (pa && pb && pb.valor > pa.valor ? ' class="gana"' : '') + '>' + (pb ? fmt(pb.valor) : '–') + '</td></tr>';
+  PROP.bloques.forEach(function (bl) {
+    var props = PROP.propiedades.filter(function (p) { return p.bloque === bl.id && (a.ficha.notas[p.id] || b.ficha.notas[p.id]); });
+    if (!props.length) return;
+    h += '<tr class="blq"><td colspan="3">' + esc(bl.nombre) + '</td></tr>';
+    props.forEach(function (p) {
+      var x = a.ficha.notas[p.id], y = b.ficha.notas[p.id];
+      h += '<tr><td title="' + esc(p.def) + '">' + esc(p.nombre) + '</td><td' + (x && y && x.nota > y.nota ? ' class="gana"' : '') + '>' + (x ? fmt(x.nota) : 'n/a') +
+        '</td><td' + (x && y && y.nota > x.nota ? ' class="gana"' : '') + '>' + (y ? fmt(y.nota) : 'n/a') + '</td></tr>';
+    });
+  });
+  return h + '</tbody></table>';
+}
+function enlazarComparador(n, d) {
+  var s = d.querySelector('#cmpSel'); if (!s) return;
+  function pintarCmp() { var o = porNombre[s.value]; d.querySelector('#cmpOut').innerHTML = o ? tablaComparar(n, o) : ''; }
+  s.onchange = pintarCmp; if (n._cmpDefecto) { s.value = n._cmpDefecto; pintarCmp(); }
+}
+/* Ficha de un módulo o de una rama de código: media de sus funciones y ranking con el perfil */
+function hojasFuncion(nodo) { var out = []; (function rec(x) { if (x.kind === 'hoja') { if (x.tipo === 'funcion' && x.ficha) out.push(x); } else x.hijos.forEach(rec); })(nodo); return out; }
+function detalleGrupoFunciones(nodo) {
+  var fs = hojasFuncion(nodo); if (!fs.length) return false;
+  vistaModulo = nodo; sel = null; pintar();
+  if (window.mostrarDetalle) window.mostrarDetalle();
+  var medias = {};
+  PROP.propiedades.forEach(function (p) {
+    var v = fs.filter(function (h) { return h.ficha.notas[p.id]; }).map(function (h) { return h.ficha.notas[p.id].nota; });
+    if (v.length) medias[p.id] = {nota: v.reduce(function (a, b) { return a + b; }, 0) / v.length, origen: 'media', cuantas: v.length,
+      detalle: 'media de ' + v.length + ' función' + (v.length > 1 ? 'es' : '')};
+  });
+  var rk = fs.map(function (h) { return {h: h, p: puntuacion(h)}; }).sort(function (a, b) { return (b.p ? b.p.valor : -1) - (a.p ? a.p.valor : -1); });
+  var tot = rk.filter(function (r) { return r.p; }), media = tot.reduce(function (a, r) { return a + r.p.valor; }, 0) / Math.max(tot.length, 1);
+  var d = $('#detalle');
+  var h = '<div class="det-cab b-' + nodo.rama + '"><i></i><span>' + (nodo.kind === 'modulo' ? esc(nodo.parent.nombre) + ' › ' : '') + (nodo.kind === 'modulo' ? 'módulo' : 'rama') + '</span></div>' +
+    '<h2>' + esc(nodo.nombre) + '</h2>' + (nodo.desc ? '<p class="desc">' + esc(nodo.desc) + '</p>' : '') +
+    '<div class="pp-cab b-' + nodo.rama + '"><span class="pp-total">' + fmt(media) + '<small> /10</small></span><span class="pp-txt">Media de ' + fs.length + ' funciones con el perfil <b>' + esc(perfilActual().nombre) + '</b></span>' +
+    '<span class="pp-txt">Cada barra es la media de las funciones a las que se aplica esa propiedad</span></div>';
+  h += '<div class="b-' + nodo.rama + '">';
+  PROP.bloques.forEach(function (bl) { h += filasBloque(bl, medias, {abierto: true, media: true}); });
+  h += '</div>';
+  if (perfilId === 'mio') h += editorPesos();
+  h += '<h3>Funciones ordenadas por el perfil</h3><div class="pp-alt b-' + nodo.rama + '">' + rk.map(function (r, i) {
+    return '<div class="fila"><span class="pos">' + (i + 1) + '</span><button class="btn" type="button" data-ir="' + esc(r.h.rid) + '">' + esc(r.h.nombre) + '</button>' +
+      (r.p ? barra(r.p.valor) + '<span class="pb-v">' + fmt(r.p.valor) + '</span>' : '<span></span><span></span>') + '</div>'; }).join('') + '</div>';
+  d.innerHTML = h; d.scrollTop = 0; enlazarPesos(d);
+  d.onclick = function (ev) { var go = ev.target.closest('button[data-ir]'); if (go && porNombre[go.dataset.ir]) seleccionar(porNombre[go.dataset.ir], true); };
+  return true;
+}
+
+/* ---------- tema ---------- */
+var temas = ['auto', 'light', 'dark'], tema = 'auto';
+function aplicarTema() {
+  var r = document.documentElement; if (tema === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', tema);
+  $('#tema').textContent = {auto: '◐', light: '☀', dark: '☾'}[tema];
+  $('#tema').title = 'Tema: ' + {auto: 'automático', light: 'claro', dark: 'oscuro'}[tema] + ' (clic para cambiar)';
+}
+try { var gt = localStorage.getItem('arbol-tema'); if (temas.indexOf(gt) >= 0) tema = gt; } catch (e) {}
+$('#tema').onclick = function () { tema = temas[(temas.indexOf(tema) + 1) % 3]; try { localStorage.setItem('arbol-tema', tema); } catch (e) {} aplicarTema(); };
+aplicarTema();
+
+/* ---------- arranque ---------- */
+coincide = {}; detalleVacio(); medir(); migas();
+var hash = decodeURIComponent((location.hash || '').slice(1));
+if (hash && porNombre[hash]) { seleccionar(porNombre[hash], true); mapa.ir(focus, true); }
+else { focus = root; mapa.ir(root, true); }
+window.addEventListener('hashchange', function () {     /* enlaces #nombre y atrás/adelante del navegador */
+  var h2 = decodeURIComponent((location.hash || '').slice(1));
+  if (h2 && porNombre[h2] && porNombre[h2] !== sel) seleccionar(porNombre[h2], true);
+});
+})();
+</script>
+</body>
+</html>

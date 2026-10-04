@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arbol-estadistica"
+version = "0.11.6"
+description = "Biblioteca estadística personal: funciones GLM, diagnóstico, selección, clustering y contrastes (portadas de SAS)."
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas>=2.0",
+    "scipy",
+    "scikit-learn>=1.2",
+    "statsmodels>=0.14",
+    "patsy",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools]
+packages = [
+    "arbol_estadistica",
+    "arbol_estadistica.preprocesado",
+    "arbol_estadistica.seleccion",
+    "arbol_estadistica.modelos",
+    "arbol_estadistica.diagnostico",
+    "arbol_estadistica.clustering",
+    "arbol_estadistica.contrastes",
+    "arbol_estadistica.graficos",
+    "arbol_estadistica.descriptiva",
+    "arbol_estadistica.multivariante",
+    "arbol_estadistica.ml",
+    "arbol_estadistica.actuarial",
+    "arbol_estadistica.finanzas",
+    "arbol_estadistica.simulacion",
+    "arbol_estadistica.diseno",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,8 @@
+numpy
+pandas>=2.0
+scipy
+scikit-learn>=1.2
+statsmodels>=0.14
+patsy
+matplotlib>=3.7
+pytest

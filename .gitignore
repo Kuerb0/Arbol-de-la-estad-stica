@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+python/
+anteriores/
+instaladores/
+.ventana/
+Claude outputs/
+visor_arbol.html
+desktop.ini
+# ficheros basura de 1-2 bytes que crea alguna herramienta del entorno en el cwd
+1
+tuple[dict*
+python_arbol.txt

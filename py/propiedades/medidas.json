@@ -1,0 +1,5083 @@
+{
+ "generado": "2026-10-04",
+ "equipo": "Linux · Python 3.13.16",
+ "reglas": {
+  "velocidad": null,
+  "escalabilidad": null,
+  "memoria": null,
+  "tamano_alfa/cobertura_ic": "|real − nominal| en tamaño α o cobertura: 10 dentro del error de Monte Carlo; −2 por cada punto (pp) de más.",
+  "insesgadez": null
+ },
+ "funciones": {
+  "ab_bayesiano": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "6.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 9.6,
+    "detalle": "pico 1.6 MB"
+   }
+  },
+  "accion_bayes": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00268 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.9,
+    "detalle": "tiempo ∝ n^1.02 (n=1.000: 0.000452 s, n=4.000: 0.000909 s, n=16.000: 0.00268 s, n=64.000: 0.011 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "adecuacion_factorial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00268 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.48 (n=1.000: 0.00156 s, n=4.000: 0.0019 s, n=16.000: 0.00268 s, n=64.000: 0.00518 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.1 MB con n = 64.000"
+   }
+  },
+  "agrupar_categorias_raras": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00191 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.65 (n=1.000: 0.001 s, n=4.000: 0.00111 s, n=16.000: 0.00191 s, n=64.000: 0.00467 s)"
+   },
+   "memoria": {
+    "nota": 9.2,
+    "detalle": "pico 2.5 MB con n = 64.000"
+   }
+  },
+  "ajustar_adaboost": {
+   "velocidad": {
+    "nota": 5.4,
+    "detalle": "1.91 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.94 (n=1.000: 0.488 s, n=4.000: 0.798 s, n=16.000: 1.91 s, n=64.000: 7.09 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 14.1 MB con n = 64.000"
+   },
+   "discriminacion": {
+    "nota": 6.6,
+    "detalle": "AUC test 0.679 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 1.6,
+    "detalle": "fiabilidad de Brier 0.0084 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 8.7,
+    "detalle": "AUC train − test = 0.033"
+   }
+  },
+  "ajustar_arbol_decision": {
+   "velocidad": {
+    "nota": 4.7,
+    "detalle": "4.47 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.5,
+    "detalle": "tiempo ∝ n^1.06 (n=1.000: 0.421 s, n=4.000: 1.02 s, n=16.000: 4.47 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 16.000"
+   },
+   "discriminacion": {
+    "nota": 6.9,
+    "detalle": "AUC test 0.688 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 0.0,
+    "detalle": "fiabilidad de Brier 0.0106 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 6.0,
+    "detalle": "AUC train − test = 0.101"
+   }
+  },
+  "ajustar_bradley_terry": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00975 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.82 (n=1.000: 0.00335 s, n=4.000: 0.00517 s, n=16.000: 0.00975 s, n=64.000: 0.0302 s)"
+   },
+   "memoria": {
+    "nota": 8.8,
+    "detalle": "pico 4.1 MB con n = 64.000"
+   }
+  },
+  "ajustar_cox": {
+   "velocidad": {
+    "nota": 4.9,
+    "detalle": "3.69 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.59 (n=1.000: 0.279 s, n=4.000: 1.03 s, n=16.000: 3.69 s, n=64.000: 8.39 s)"
+   },
+   "memoria": {
+    "nota": 7.1,
+    "detalle": "pico 29.0 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC del HR: 0.952 (n=200, censura uniforme, 1000 sim.)"
+   },
+   "insesgadez": {
+    "nota": 9.7,
+    "detalle": "sesgo de log(HR): -0.004 (n=200, censura uniforme, 1000 sim.)"
+   }
+  },
+  "ajustar_distribucion_discreta": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.0272 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.5,
+    "detalle": "tiempo ∝ n^1.07 (n=1.000: 0.00436 s, n=4.000: 0.00987 s, n=16.000: 0.0272 s, n=64.000: 0.119 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 4.8 MB con n = 64.000"
+   }
+  },
+  "ajustar_distribuciones": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.127 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.0137 s, n=4.000: 0.0279 s, n=16.000: 0.127 s, n=64.000: 0.352 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.3 MB con n = 64.000"
+   }
+  },
+  "ajustar_glm_binomial": {
+   "velocidad": {
+    "nota": 8.1,
+    "detalle": "0.0843 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.0281 s, n=4.000: 0.0401 s, n=16.000: 0.0843 s, n=64.000: 0.288 s)"
+   },
+   "memoria": {
+    "nota": 7.1,
+    "detalle": "pico 29.6 MB con n = 64.000"
+   }
+  },
+  "ajustar_glm_conteo": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "0.065 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.0129 s, n=4.000: 0.0228 s, n=16.000: 0.065 s, n=64.000: 0.213 s)"
+   },
+   "memoria": {
+    "nota": 6.6,
+    "detalle": "pico 47.7 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real con sobredispersión (coeficiente nulo, n=400): binomial negativa 0.056 · Poisson 0.246 (500 sim.)"
+   }
+  },
+  "ajustar_glm_severidad": {
+   "velocidad": {
+    "nota": 9.0,
+    "detalle": "0.0301 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.71 (n=1.000: 0.0101 s, n=4.000: 0.0139 s, n=16.000: 0.0301 s, n=64.000: 0.081 s)"
+   },
+   "memoria": {
+    "nota": 7.4,
+    "detalle": "pico 20.5 MB con n = 64.000"
+   }
+  },
+  "ajustar_glm_splines": {
+   "velocidad": {
+    "nota": 8.3,
+    "detalle": "0.0694 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.0336 s, n=4.000: 0.0422 s, n=16.000: 0.0694 s, n=64.000: 0.239 s)"
+   },
+   "memoria": {
+    "nota": 6.3,
+    "detalle": "pico 67.7 MB con n = 64.000"
+   }
+  },
+  "ajustar_gpd": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0151 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.45 (n=1.000: 0.0102 s, n=4.000: 0.0113 s, n=16.000: 0.0151 s, n=64.000: 0.0282 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "prob. real de superar el VaR 99 % (ideal 0.010): histórico 0.0108 · normal 0.0154 · Cornish-Fisher 0.0047 · GPD 0.0100 (t4, n=1000, 200 sim.)"
+   }
+  },
+  "ajustar_gradient_boosting": {
+   "velocidad": {
+    "nota": 6.3,
+    "detalle": "0.712 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.93 (n=1.000: 0.0598 s, n=4.000: 0.25 s, n=16.000: 0.712 s, n=64.000: 2.59 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 16.1 MB con n = 64.000"
+   },
+   "discriminacion": {
+    "nota": 10.0,
+    "detalle": "AUC test 0.773 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 6.9,
+    "detalle": "fiabilidad de Brier 0.0031 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 5.8,
+    "detalle": "AUC train − test = 0.106"
+   }
+  },
+  "ajustar_kmeans": {
+   "velocidad": {
+    "nota": 7.0,
+    "detalle": "0.333 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.30 (n=1.000: 0.0231 s, n=4.000: 0.05 s, n=16.000: 0.333 s, n=64.000: 0.507 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.7 MB con n = 64.000"
+   }
+  },
+  "ajustar_knn": {
+   "velocidad": {
+    "nota": 4.8,
+    "detalle": "4.06 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.7,
+    "detalle": "tiempo ∝ n^1.05 (n=1.000: 0.395 s, n=4.000: 0.948 s, n=16.000: 4.06 s)"
+   },
+   "memoria": {
+    "nota": 7.3,
+    "detalle": "pico 22.1 MB con n = 16.000"
+   },
+   "discriminacion": {
+    "nota": 8.8,
+    "detalle": "AUC test 0.740 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 7.1,
+    "detalle": "fiabilidad de Brier 0.0029 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 7.1,
+    "detalle": "AUC train − test = 0.071"
+   }
+  },
+  "ajustar_ley_mortalidad": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "9.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "ajustar_logit": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00814 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.99 (n=1.000: 0.00376 s, n=4.000: 0.00353 s, n=16.000: 0.00814 s, n=64.000: 0.0319 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 8.7 MB con n = 64.000"
+   },
+   "insesgadez": {
+    "nota": 6.6,
+    "detalle": "sesgo relativo +8.5% (n=80, β=1, 1000 sim.)"
+   },
+   "ecm": {
+    "nota": 7.9,
+    "detalle": "ECM 0.150 vs Firth 0.118 (n=80, β=1, 1000 sim.)"
+   }
+  },
+  "ajustar_logit_ordinal": {
+   "velocidad": {
+    "nota": 6.8,
+    "detalle": "0.384 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.0891 s, n=4.000: 0.132 s, n=16.000: 0.384 s, n=64.000: 1.36 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 10.4 MB con n = 64.000"
+   }
+  },
+  "ajustar_mars": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.138 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.2,
+    "detalle": "tiempo ∝ n^1.26 (n=1.000: 0.0157 s, n=4.000: 0.042 s, n=16.000: 0.138 s, n=64.000: 0.787 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 12.3 MB con n = 64.000"
+   }
+  },
+  "ajustar_modelo_mixto": {
+   "velocidad": {
+    "nota": 6.1,
+    "detalle": "0.854 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.98 (n=1.000: 0.0681 s, n=4.000: 0.247 s, n=16.000: 0.854 s, n=64.000: 3.3 s)"
+   },
+   "memoria": {
+    "nota": 7.2,
+    "detalle": "pico 24.7 MB con n = 64.000"
+   }
+  },
+  "ajustar_naive_bayes": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0409 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.0216 s, n=4.000: 0.0256 s, n=16.000: 0.0409 s, n=64.000: 0.112 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.9 MB con n = 64.000"
+   },
+   "discriminacion": {
+    "nota": 4.0,
+    "detalle": "AUC test 0.608 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 4.6,
+    "detalle": "fiabilidad de Brier 0.0054 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 9.7,
+    "detalle": "AUC train − test = 0.007"
+   }
+  },
+  "ajustar_ols": {
+   "velocidad": {
+    "nota": 8.6,
+    "detalle": "0.0523 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.92 (n=1.000: 0.0127 s, n=4.000: 0.0213 s, n=16.000: 0.0523 s, n=64.000: 0.187 s)"
+   },
+   "memoria": {
+    "nota": 7.4,
+    "detalle": "pico 19.5 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real con heterocedasticidad fuerte (n=100): HC3 0.042 · SE clásicos 0.200 (1000 sim.)"
+   }
+  },
+  "ajustar_p_valores": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00336 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.90 (n=1.000: 0.000627 s, n=4.000: 0.00107 s, n=16.000: 0.00336 s, n=64.000: 0.0117 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 6.9 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "FDR real 0.038 (cota BH: 0.05·80/100 = 0.04); potencia media 0.71"
+   }
+  },
+  "ajustar_random_forest": {
+   "velocidad": {
+    "nota": 4.9,
+    "detalle": "3.56 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.99 (n=1.000: 1.04 s, n=4.000: 1.32 s, n=16.000: 3.56 s, n=64.000: 14 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.3 MB con n = 64.000"
+   },
+   "discriminacion": {
+    "nota": 9.5,
+    "detalle": "AUC test 0.759 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 5.4,
+    "detalle": "fiabilidad de Brier 0.0046 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 1.5,
+    "detalle": "AUC train − test = 0.212"
+   }
+  },
+  "ajustar_red_neuronal": {
+   "velocidad": {
+    "nota": 5.7,
+    "detalle": "1.34 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.108 s, n=4.000: 0.284 s, n=16.000: 1.34 s, n=64.000: 3.76 s)"
+   },
+   "memoria": {
+    "nota": 7.1,
+    "detalle": "pico 27.7 MB con n = 64.000"
+   },
+   "discriminacion": {
+    "nota": 9.0,
+    "detalle": "AUC test 0.747 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 4.7,
+    "detalle": "fiabilidad de Brier 0.0053 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 9.2,
+    "detalle": "AUC train − test = 0.020"
+   }
+  },
+  "ajustar_regularizado": {
+   "velocidad": {
+    "nota": 5.1,
+    "detalle": "2.89 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.9,
+    "detalle": "tiempo ∝ n^1.15 (n=1.000: 0.467 s, n=4.000: 0.901 s, n=16.000: 2.89 s, n=64.000: 14.3 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.3 MB con n = 64.000"
+   }
+  },
+  "ajustar_stacking": {
+   "velocidad": {
+    "nota": 4.3,
+    "detalle": "7.38 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.28 (n=1.000: 3.38 s, n=4.000: 4.99 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.2 MB con n = 4.000"
+   },
+   "discriminacion": {
+    "nota": 9.7,
+    "detalle": "AUC test 0.766 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 6.7,
+    "detalle": "fiabilidad de Brier 0.0033 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 2.2,
+    "detalle": "AUC train − test = 0.195"
+   }
+  },
+  "ajustar_supervivencia_parametrica": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.134 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.92 (n=1.000: 0.0465 s, n=4.000: 0.0642 s, n=16.000: 0.134 s, n=64.000: 0.48 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.7 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC del log-HR (Weibull, n=300): 0.940 (250 sim.)"
+   }
+  },
+  "ajustar_svm": {
+   "velocidad": {
+    "nota": 3.2,
+    "detalle": "24.9 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 2.4,
+    "detalle": "tiempo ∝ n^2.09 (n=1.000: 0.128 s, n=4.000: 1.38 s, n=16.000: 24.9 s)"
+   },
+   "memoria": {
+    "nota": 8.8,
+    "detalle": "pico 3.9 MB con n = 16.000"
+   },
+   "discriminacion": {
+    "nota": 8.7,
+    "detalle": "AUC test 0.739 (mejor del grupo 0.773; escenario no lineal, 5 semillas)"
+   },
+   "calibracion": {
+    "nota": 5.3,
+    "detalle": "fiabilidad de Brier 0.0047 (0 = perfecta)"
+   },
+   "generalizacion": {
+    "nota": 7.7,
+    "detalle": "AUC train − test = 0.059"
+   }
+  },
+  "ajustar_tweedie": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "0.0637 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 0.0153 s, n=4.000: 0.0232 s, n=16.000: 0.0637 s, n=64.000: 0.256 s)"
+   },
+   "memoria": {
+    "nota": 6.3,
+    "detalle": "pico 70.7 MB con n = 64.000"
+   }
+  },
+  "ajustar_wls": {
+   "velocidad": {
+    "nota": 9.0,
+    "detalle": "0.0304 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.60 (n=1.000: 0.0263 s, n=4.000: 0.0216 s, n=16.000: 0.0304 s, n=64.000: 0.0704 s)"
+   },
+   "memoria": {
+    "nota": 7.3,
+    "detalle": "pico 23.4 MB con n = 64.000"
+   }
+  },
+  "ajuste_no_respuesta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00875 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.00581 s, n=4.000: 0.0059 s, n=16.000: 0.00875 s, n=64.000: 0.031 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.5 MB con n = 64.000"
+   }
+  },
+  "aleatorizar_ensayo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.2 MB"
+   }
+  },
+  "alfa_cronbach": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "0.0266 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.00995 s, n=4.000: 0.0126 s, n=16.000: 0.0266 s, n=64.000: 0.0913 s)"
+   },
+   "memoria": {
+    "nota": 7.9,
+    "detalle": "pico 11.0 MB con n = 64.000"
+   }
+  },
+  "analisis_conjunto": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0165 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.79 (n=1.000: 0.00528 s, n=4.000: 0.00758 s, n=16.000: 0.0165 s, n=64.000: 0.0489 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "analisis_correspondencias": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "analisis_discriminante": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.139 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.93 (n=1.000: 0.0333 s, n=4.000: 0.0543 s, n=16.000: 0.139 s, n=64.000: 0.505 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 12.6 MB con n = 64.000"
+   }
+  },
+  "analisis_factorial": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.128 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.0125 s, n=4.000: 0.0513 s, n=16.000: 0.128 s, n=64.000: 0.453 s)"
+   },
+   "memoria": {
+    "nota": 7.1,
+    "detalle": "pico 26.9 MB con n = 64.000"
+   }
+  },
+  "analisis_intencion_tratar": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00557 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.44 (n=1.000: 0.00368 s, n=4.000: 0.00408 s, n=16.000: 0.00557 s, n=64.000: 0.0103 s)"
+   },
+   "memoria": {
+    "nota": 9.3,
+    "detalle": "pico 2.2 MB con n = 64.000"
+   }
+  },
+  "analisis_perfiles": {
+   "velocidad": {
+    "nota": 8.3,
+    "detalle": "0.071 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.0188 s, n=4.000: 0.0303 s, n=16.000: 0.071 s, n=64.000: 0.245 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 13.7 MB con n = 64.000"
+   }
+  },
+  "analizar_distribucion_conjunta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "ancova": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.143 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.0599 s, n=4.000: 0.0596 s, n=16.000: 0.143 s, n=64.000: 0.464 s)"
+   },
+   "memoria": {
+    "nota": 7.4,
+    "detalle": "pico 20.8 MB con n = 64.000"
+   }
+  },
+  "anova_anidado": {
+   "velocidad": {
+    "nota": 8.0,
+    "detalle": "0.102 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.70 (n=1.000: 0.0323 s, n=4.000: 0.0418 s, n=16.000: 0.102 s, n=64.000: 0.268 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 13.1 MB con n = 64.000"
+   }
+  },
+  "anova_bloques": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.121 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.94 (n=1.000: 0.0255 s, n=4.000: 0.0451 s, n=16.000: 0.121 s, n=64.000: 0.443 s)"
+   },
+   "memoria": {
+    "nota": 6.7,
+    "detalle": "pico 46.1 MB con n = 64.000"
+   }
+  },
+  "anova_cuadrado_latino": {
+   "velocidad": {
+    "nota": 7.9,
+    "detalle": "0.115 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^-0.11 (n=1.000: 0.0627 s, n=4.000: 0.109 s, n=16.000: 0.115 s, n=64.000: 0.0981 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 6.9 MB con n = 64.000"
+   }
+  },
+  "anova_factorial": {
+   "velocidad": {
+    "nota": 8.1,
+    "detalle": "0.0875 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.92 (n=1.000: 0.0219 s, n=4.000: 0.0348 s, n=16.000: 0.0875 s, n=64.000: 0.314 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 13.3 MB con n = 64.000"
+   }
+  },
+  "anova_medidas_repetidas": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "0.024 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.77 (n=1.000: 0.00857 s, n=4.000: 0.0118 s, n=16.000: 0.024 s, n=64.000: 0.0701 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 8.1 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real sin esfericidad: sin corregir 0.074 · Greenhouse-Geisser 0.050 (500 sim.)"
+   }
+  },
+  "aproximar_modelo": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.0288 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.87 (n=1.000: 0.0141 s, n=4.000: 0.0171 s, n=16.000: 0.0288 s, n=64.000: 0.0965 s)"
+   },
+   "memoria": {
+    "nota": 7.5,
+    "detalle": "pico 17.4 MB con n = 64.000"
+   }
+  },
+  "arbol_binomial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "9.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "arbol_black_derman_toy": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "3.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "asignacion_estratos": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.7 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "auc_train_test": {
+   "velocidad": {
+    "nota": 8.7,
+    "detalle": "0.0437 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.77 (n=1.000: 0.0164 s, n=4.000: 0.0202 s, n=16.000: 0.0437 s, n=64.000: 0.126 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 8.8 MB con n = 64.000"
+   }
+  },
+  "autoconsistencia_votacion": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "20.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 1.0 MB"
+   }
+  },
+  "balancear_clases": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00798 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.00292 s, n=4.000: 0.0039 s, n=16.000: 0.00798 s, n=64.000: 0.0263 s)"
+   },
+   "memoria": {
+    "nota": 7.3,
+    "detalle": "pico 21.9 MB con n = 64.000"
+   }
+  },
+  "bandas_confianza_regresion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00355 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.72 (n=1.000: 0.00101 s, n=4.000: 0.0018 s, n=16.000: 0.00355 s, n=64.000: 0.00959 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.6 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura SIMULTÁNEA de la recta (40 puntos): Working-Hotelling 0.958 · puntual 0.854 (500 sim.)"
+   }
+  },
+  "bayes_empirico_beta": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0116 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.60 (n=1.000: 0.00475 s, n=4.000: 0.00648 s, n=16.000: 0.0116 s, n=64.000: 0.0266 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.2 MB con n = 64.000"
+   }
+  },
+  "beta_capm": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00401 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.98 (n=1.000: 0.00087 s, n=4.000: 0.00133 s, n=16.000: 0.00401 s, n=64.000: 0.0156 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 6.7 MB con n = 64.000"
+   }
+  },
+  "black_litterman": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "black_scholes": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "bondad_ajuste_multinomial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "bonus_malus": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "bootstrap_chain_ladder": {
+   "velocidad": {
+    "nota": 7.2,
+    "detalle": "254.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "bootstrap_ic": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "0.0244 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.5,
+    "detalle": "tiempo ∝ n^1.07 (n=1.000: 0.00216 s, n=4.000: 0.00646 s, n=16.000: 0.0244 s, n=64.000: 0.108 s)"
+   },
+   "memoria": {
+    "nota": 6.0,
+    "detalle": "pico 103.4 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 7.0,
+    "detalle": "cobertura BCa de la media lognormal (n=40): 0.908 (250 sim.)"
+   }
+  },
+  "bootstrapping_etti": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "buscar_k_silhouette": {
+   "velocidad": {
+    "nota": 5.7,
+    "detalle": "1.42 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.24 (n=1.000: 0.188 s, n=4.000: 0.879 s, n=16.000: 1.42 s, n=64.000: 1.99 s)"
+   },
+   "memoria": {
+    "nota": 4.8,
+    "detalle": "pico 401.0 MB con n = 64.000"
+   }
+  },
+  "cadena_markov": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "cadena_markov_continua": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.7 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "calcular_vif": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "0.0142 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.96 (n=1.000: 0.00377 s, n=4.000: 0.00586 s, n=16.000: 0.0142 s, n=64.000: 0.0539 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 13.8 MB con n = 64.000"
+   }
+  },
+  "calibrar_probabilidades": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0414 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.13 (n=1.000: 0.00303 s, n=4.000: 0.00393 s, n=16.000: 0.0414 s, n=64.000: 0.0498 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.1 MB con n = 64.000"
+   }
+  },
+  "categorizar_por_cuantiles": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00921 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.63 (n=1.000: 0.00338 s, n=4.000: 0.00566 s, n=16.000: 0.00921 s, n=64.000: 0.0222 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 9.7 MB con n = 64.000"
+   }
+  },
+  "centrar_por_grupo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00763 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.68 (n=1.000: 0.00288 s, n=4.000: 0.00318 s, n=16.000: 0.00763 s, n=64.000: 0.0197 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.8 MB con n = 64.000"
+   }
+  },
+  "centroides_contraidos": {
+   "velocidad": {
+    "nota": 7.6,
+    "detalle": "0.157 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.0737 s, n=4.000: 0.0903 s, n=16.000: 0.157 s, n=64.000: 0.44 s)"
+   },
+   "memoria": {
+    "nota": 6.9,
+    "detalle": "pico 33.6 MB con n = 64.000"
+   }
+  },
+  "chain_ladder": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "24.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "chequeo_predictivo": {
+   "velocidad": {
+    "nota": 7.5,
+    "detalle": "0.168 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.8,
+    "detalle": "tiempo ∝ n^1.03 (n=1.000: 0.0184 s, n=4.000: 0.0494 s, n=16.000: 0.168 s, n=64.000: 0.702 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "clustering_jerarquico": {
+   "velocidad": {
+    "nota": 3.6,
+    "detalle": "15.2 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 1.8,
+    "detalle": "tiempo ∝ n^2.17 (n=1.000: 0.0366 s, n=4.000: 0.744 s) · no admite n = 16.000 (16000 filas: demasiadas para jerárquico (memoria O(n²)); muestrea o usa ajustar_)"
+   },
+   "memoria": {
+    "nota": 4.7,
+    "detalle": "pico 448.3 MB con n = 4.000"
+   }
+  },
+  "codificar_ordinal": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0036 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.00087 s, n=4.000: 0.0015 s, n=16.000: 0.0036 s, n=64.000: 0.0123 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 9.7 MB con n = 64.000"
+   }
+  },
+  "codificar_por_objetivo": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.011 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.58 (n=1.000: 0.00906 s, n=4.000: 0.00898 s, n=16.000: 0.011 s, n=64.000: 0.0244 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 4.9 MB con n = 64.000"
+   }
+  },
+  "coeficiente_icc": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0052 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.00309 s, n=4.000: 0.00291 s, n=16.000: 0.0052 s, n=64.000: 0.0183 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "comparar_clasificadores": {
+   "velocidad": {
+    "nota": 5.4,
+    "detalle": "1.97 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.475 s, n=4.000: 0.928 s, n=16.000: 1.97 s, n=64.000: 5.42 s)"
+   },
+   "memoria": {
+    "nota": 7.5,
+    "detalle": "pico 17.4 MB con n = 64.000"
+   }
+  },
+  "comparar_enlaces": {
+   "velocidad": {
+    "nota": 8.1,
+    "detalle": "0.0894 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.80 (n=1.000: 0.0597 s, n=4.000: 0.0526 s, n=16.000: 0.0894 s, n=64.000: 0.27 s)"
+   },
+   "memoria": {
+    "nota": 7.1,
+    "detalle": "pico 29.4 MB con n = 64.000"
+   }
+  },
+  "comparar_estimadores": {
+   "velocidad": {
+    "nota": 8.9,
+    "detalle": "0.036 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 0.00334 s, n=4.000: 0.00975 s, n=16.000: 0.036 s, n=64.000: 0.144 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.2 MB con n = 64.000"
+   }
+  },
+  "comparar_modelos_cv": {
+   "velocidad": {
+    "nota": 7.0,
+    "detalle": "0.33 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.52 (n=1.000: 0.168 s, n=4.000: 0.193 s, n=16.000: 0.33 s, n=64.000: 0.682 s)"
+   },
+   "memoria": {
+    "nota": 5.5,
+    "detalle": "pico 171.6 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 9.0,
+    "detalle": "α real con una variable de ruido: corregido 0.015 · t pareado sin corregir 0.175 (200 sim.)"
+   }
+  },
+  "comparar_tecnicas_estimacion": {
+   "velocidad": {
+    "nota": 7.9,
+    "detalle": "0.115 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.39 (n=1.000: 0.0396 s, n=4.000: 0.0548 s, n=16.000: 0.115 s, n=64.000: 0.198 s)"
+   },
+   "memoria": {
+    "nota": 7.3,
+    "detalle": "pico 22.2 MB con n = 64.000"
+   }
+  },
+  "conmutados": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "contraste_apareado": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00182 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.63 (n=1.000: 0.000838 s, n=4.000: 0.000978 s, n=16.000: 0.00182 s, n=64.000: 0.00435 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 0.0,
+    "detalle": "α real 0.152 para H0 «media de las diferencias = 0» con diferencias asimétricas (exponencial centrada, n=25): el modo auto pasa a Wilcoxon, que contrasta la pseudomediana (1000 sim.)"
+   }
+  },
+  "contraste_box_m": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00478 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.64 (n=1.000: 0.0024 s, n=4.000: 0.00291 s, n=16.000: 0.00478 s, n=64.000: 0.0117 s)"
+   },
+   "memoria": {
+    "nota": 8.7,
+    "detalle": "pico 4.6 MB con n = 64.000"
+   }
+  },
+  "contraste_chi2_variable": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0107 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.49 (n=1.000: 0.00558 s, n=4.000: 0.00653 s, n=16.000: 0.0107 s, n=64.000: 0.021 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.3 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.048 (n=300, 3 niveles, 1000 sim.)"
+   }
+  },
+  "contraste_f_parcial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000147 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.14 (n=1.000: 8.43e-05 s, n=4.000: 0.000106 s, n=16.000: 0.000147 s, n=64.000: 0.000179 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   }
+  },
+  "contraste_falta_ajuste": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00391 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.00208 s, n=4.000: 0.00222 s, n=16.000: 0.00391 s, n=64.000: 0.0107 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "contraste_friedman": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00857 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.72 (n=1.000: 0.00429 s, n=4.000: 0.00522 s, n=16.000: 0.00857 s, n=64.000: 0.0232 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.0 MB con n = 64.000"
+   }
+  },
+  "contraste_hotelling": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00717 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.47 (n=1.000: 0.00394 s, n=4.000: 0.00437 s, n=16.000: 0.00717 s, n=64.000: 0.0138 s)"
+   },
+   "memoria": {
+    "nota": 9.2,
+    "detalle": "pico 2.4 MB con n = 64.000"
+   }
+  },
+  "contraste_jonckheere": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0114 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.81 (n=1.000: 0.00421 s, n=4.000: 0.0054 s, n=16.000: 0.0114 s, n=64.000: 0.0347 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.040 (3×15, 1000 sim.)"
+   }
+  },
+  "contraste_log_rank": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0107 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.00189 s, n=4.000: 0.0037 s, n=16.000: 0.0107 s, n=64.000: 0.0355 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.3 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.047 (n=200, censura uniforme, 1000 sim.)"
+   }
+  },
+  "contraste_mcar_little": {
+   "velocidad": {
+    "nota": 8.6,
+    "detalle": "0.0479 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.0,
+    "detalle": "tiempo ∝ n^1.14 (n=1.000: 0.00974 s, n=4.000: 0.0165 s, n=16.000: 0.0479 s, n=64.000: 0.234 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.2 MB con n = 64.000"
+   }
+  },
+  "contraste_mcnemar": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00097 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.94 (n=1.000: 0.000165 s, n=4.000: 0.000318 s, n=16.000: 0.00097 s, n=64.000: 0.00357 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 6.1,
+    "detalle": "α real 0.017 (n=80, 1000 sim.)"
+   }
+  },
+  "contraste_normalidad": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0156 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.82 (n=1.000: 0.00541 s, n=4.000: 0.00771 s, n=16.000: 0.0156 s, n=64.000: 0.0482 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real de Shapiro-Wilk 0.050 (n=50, normal, 1000 sim.)"
+   }
+  },
+  "contraste_permutacion": {
+   "velocidad": {
+    "nota": 9.0,
+    "detalle": "0.0329 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.95 (n=1.000: 0.00438 s, n=4.000: 0.0101 s, n=16.000: 0.0329 s, n=64.000: 0.123 s)"
+   },
+   "memoria": {
+    "nota": 9.2,
+    "detalle": "pico 2.6 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.043 (n=15+15, 1000 sim.)"
+   }
+  },
+  "contraste_proceso_poisson": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00521 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.00268 s, n=4.000: 0.0031 s, n=16.000: 0.00521 s, n=64.000: 0.0143 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "contraste_schoenfeld": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.149 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.44 (n=1.000: 0.00281 s, n=4.000: 0.00368 s, n=16.000: 0.149 s, n=64.000: 0.273 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.6 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real con riesgos proporcionales (Weibull, n=300): 0.036 (250 sim.)"
+   }
+  },
+  "contraste_sobredispersion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0015 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.71 (n=1.000: 0.000581 s, n=4.000: 0.000803 s, n=16.000: 0.0015 s, n=64.000: 0.004 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.6 MB con n = 64.000"
+   }
+  },
+  "contrastes_aleatoriedad": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00693 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.77 (n=1.000: 0.00281 s, n=4.000: 0.00382 s, n=16.000: 0.00693 s, n=64.000: 0.0201 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "control_t2_multivariante": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0106 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.84 (n=1.000: 0.00238 s, n=4.000: 0.00605 s, n=16.000: 0.0106 s, n=64.000: 0.0338 s)"
+   },
+   "memoria": {
+    "nota": 9.1,
+    "detalle": "pico 2.8 MB con n = 64.000"
+   }
+  },
+  "convergencia_media_muestral": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0108 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.0125 s, n=4.000: 0.00732 s, n=16.000: 0.0108 s, n=64.000: 0.0301 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 4.8 MB con n = 64.000"
+   }
+  },
+  "correccion_error_medida": {
+   "velocidad": {
+    "nota": 8.1,
+    "detalle": "0.086 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.7,
+    "detalle": "tiempo ∝ n^1.04 (n=1.000: 0.0104 s, n=4.000: 0.0284 s, n=16.000: 0.086 s, n=64.000: 0.364 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.1 MB con n = 64.000"
+   }
+  },
+  "corregir_probabilidades_por_balanceo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "8.53e-05 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.0,
+    "detalle": "tiempo ∝ n^1.28 (n=1.000: 1.41e-05 s, n=4.000: 2.08e-05 s, n=16.000: 8.53e-05 s, n=64.000: 0.000502 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.0 MB con n = 64.000"
+   }
+  },
+  "correlacion_canonica": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00918 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.78 (n=1.000: 0.0064 s, n=4.000: 0.00642 s, n=16.000: 0.00918 s, n=64.000: 0.0269 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.3 MB con n = 64.000"
+   }
+  },
+  "correlacion_con_ic": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00539 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.83 (n=1.000: 0.00151 s, n=4.000: 0.00207 s, n=16.000: 0.00539 s, n=64.000: 0.0171 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.8 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC de Pearson 0.942 (ρ=0.5, n=40, 1000 sim.)"
+   }
+  },
+  "correlacion_parcial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00455 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.65 (n=1.000: 0.00238 s, n=4.000: 0.00279 s, n=16.000: 0.00455 s, n=64.000: 0.0112 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "coste_de_dicotomizar": {
+   "velocidad": {
+    "nota": 6.4,
+    "detalle": "0.618 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.96 (n=1.000: 0.0361 s, n=4.000: 0.165 s, n=16.000: 0.618 s, n=64.000: 2.34 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   }
+  },
+  "credibilidad_buhlmann": {
+   "velocidad": {
+    "nota": 6.9,
+    "detalle": "0.345 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.92 (n=1.000: 0.0257 s, n=4.000: 0.0718 s, n=16.000: 0.345 s, n=64.000: 1.23 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "cribar_variables": {
+   "velocidad": {
+    "nota": 7.4,
+    "detalle": "0.189 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.96 (n=1.000: 0.0579 s, n=4.000: 0.0929 s, n=16.000: 0.189 s, n=64.000: 0.719 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 16.0 MB con n = 64.000"
+   }
+  },
+  "cuadrado_latino": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "curva_potencia": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "10.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "curva_precision_recall": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00806 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.00193 s, n=4.000: 0.00292 s, n=16.000: 0.00806 s, n=64.000: 0.0263 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 8.6 MB con n = 64.000"
+   }
+  },
+  "decrementos_multiples": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "dependencia_parcial": {
+   "velocidad": {
+    "nota": 6.2,
+    "detalle": "0.838 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.4,
+    "detalle": "tiempo ∝ n^1.08 (n=1.000: 0.029 s, n=4.000: 0.201 s, n=16.000: 0.838 s, n=64.000: 3.75 s)"
+   },
+   "memoria": {
+    "nota": 8.7,
+    "detalle": "pico 4.5 MB con n = 64.000"
+   }
+  },
+  "descomposicion_brier": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00715 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.40 (n=1.000: 0.00507 s, n=4.000: 0.00546 s, n=16.000: 0.00715 s, n=64.000: 0.0125 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "detectar_atipicos": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00369 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.78 (n=1.000: 0.00123 s, n=4.000: 0.00171 s, n=16.000: 0.00369 s, n=64.000: 0.0109 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.8 MB con n = 64.000"
+   }
+  },
+  "diagnostico_anova": {
+   "velocidad": {
+    "nota": 2.7,
+    "detalle": "44.1 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 4.3,
+    "detalle": "tiempo ∝ n^1.82 (n=1.000: 0.415 s, n=4.000: 3.54 s, n=16.000: 44.1 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 16.000"
+   }
+  },
+  "diagnostico_mcmc": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00287 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.84 (n=1.000: 0.000853 s, n=4.000: 0.00129 s, n=16.000: 0.00287 s, n=64.000: 0.00923 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "diccionario_datos": {
+   "velocidad": {
+    "nota": 9.3,
+    "detalle": "0.0236 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.00687 s, n=4.000: 0.01 s, n=16.000: 0.0236 s, n=64.000: 0.083 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "diferencias_en_diferencias": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "0.0177 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.60 (n=1.000: 0.0105 s, n=4.000: 0.0116 s, n=16.000: 0.0177 s, n=64.000: 0.0409 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 13.0 MB con n = 64.000"
+   }
+  },
+  "diseno_central_compuesto": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "diseno_factorial_2k": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "distancia_mahalanobis": {
+   "velocidad": {
+    "nota": 5.0,
+    "detalle": "3.07 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.3,
+    "detalle": "tiempo ∝ n^1.09 (n=1.000: 0.524 s, n=4.000: 1.13 s, n=16.000: 3.07 s, n=64.000: 14 s)"
+   },
+   "memoria": {
+    "nota": 6.5,
+    "detalle": "pico 59.5 MB con n = 64.000"
+   }
+  },
+  "distribucion_estadistico_orden": {
+   "velocidad": {
+    "nota": 8.6,
+    "detalle": "51.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "distribucion_muestral_simulada": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0111 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.88 (n=1.000: 0.00243 s, n=4.000: 0.00396 s, n=16.000: 0.0111 s, n=64.000: 0.0375 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.7 MB con n = 64.000"
+   }
+  },
+  "dividir_train_test": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00794 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.84 (n=1.000: 0.00166 s, n=4.000: 0.00264 s, n=16.000: 0.00794 s, n=64.000: 0.0253 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "dominancia_estocastica": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000534 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.77 (n=1.000: 0.000114 s, n=4.000: 0.000196 s, n=16.000: 0.000534 s, n=64.000: 0.00155 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 1.0 MB con n = 64.000"
+   }
+  },
+  "dominio_aplicabilidad": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.137 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.3,
+    "detalle": "tiempo ∝ n^1.10 (n=1.000: 0.0107 s, n=4.000: 0.0308 s, n=16.000: 0.137 s, n=64.000: 0.63 s)"
+   },
+   "memoria": {
+    "nota": 7.3,
+    "detalle": "pico 22.5 MB con n = 64.000"
+   }
+  },
+  "duracion_hasta_evento": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "0.0626 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.66 (n=1.000: 0.00361 s, n=4.000: 0.0115 s, n=16.000: 0.0626 s, n=64.000: 0.156 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "efectos_factorial_2k": {
+   "velocidad": {
+    "nota": 8.6,
+    "detalle": "0.0486 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.77 (n=1.000: 0.021 s, n=4.000: 0.024 s, n=16.000: 0.0486 s, n=64.000: 0.141 s)"
+   },
+   "memoria": {
+    "nota": 6.8,
+    "detalle": "pico 40.1 MB con n = 64.000"
+   }
+  },
+  "elegir_contraste": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0115 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.40 (n=1.000: 0.00315 s, n=4.000: 0.00406 s, n=16.000: 0.0115 s, n=64.000: 0.02 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.050 (normal) y 0.040 (lognormal), nominal 0.05, 1000 sim."
+   },
+   "potencia": {
+    "nota": 9.9,
+    "detalle": "normal d=0.7: 0.68 vs t-test 0.68; lognormal: 0.66 vs Mann-Whitney 0.66 (n=25 por grupo)"
+   }
+  },
+  "eliminacion_recursiva": {
+   "velocidad": {
+    "nota": 7.3,
+    "detalle": "0.237 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.46 (n=1.000: 0.0624 s, n=4.000: 0.0745 s, n=16.000: 0.237 s, n=64.000: 0.446 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 10.1 MB con n = 64.000"
+   }
+  },
+  "equivalente_cierto": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "es_posible_fuga": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "escalamiento_multidimensional": {
+   "velocidad": {
+    "nota": 0.6,
+    "detalle": "512 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 0.0,
+    "detalle": "tiempo ∝ n^2.94 (n=1.000: 0.147 s, n=4.000: 8.68 s)"
+   },
+   "memoria": {
+    "nota": 4.1,
+    "detalle": "pico 896.7 MB con n = 4.000"
+   }
+  },
+  "estadistico_ks_gini": {
+   "velocidad": {
+    "nota": 9.8,
+    "detalle": "0.0132 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.78 (n=1.000: 0.00386 s, n=4.000: 0.0177 s, n=16.000: 0.0132 s, n=64.000: 0.039 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.6 MB con n = 64.000"
+   }
+  },
+  "estadisticos_asociacion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00392 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.62 (n=1.000: 0.00121 s, n=4.000: 0.00155 s, n=16.000: 0.00392 s, n=64.000: 0.00923 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "estandarizar_tasas": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "estimador_hill": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00414 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.62 (n=1.000: 0.0025 s, n=4.000: 0.00275 s, n=16.000: 0.00414 s, n=64.000: 0.00973 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "estimador_razon": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000524 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.81 (n=1.000: 0.000228 s, n=4.000: 0.000269 s, n=16.000: 0.000524 s, n=64.000: 0.00162 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.0 MB con n = 64.000"
+   }
+  },
+  "estimar_densidad": {
+   "velocidad": {
+    "nota": 8.5,
+    "detalle": "0.0541 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.6,
+    "detalle": "tiempo ∝ n^1.06 (n=1.000: 0.00302 s, n=4.000: 0.0102 s, n=16.000: 0.0541 s, n=64.000: 0.234 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "estimar_estratificado": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00407 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.54 (n=1.000: 0.00294 s, n=4.000: 0.00303 s, n=16.000: 0.00407 s, n=64.000: 0.00866 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "estimar_mas": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00502 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.84 (n=1.000: 0.00182 s, n=4.000: 0.00242 s, n=16.000: 0.00502 s, n=64.000: 0.0162 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC con n/N = 25 % y corrección finita 0.958 (500 sim.)"
+   }
+  },
+  "estimar_montecarlo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000425 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.67 (n=1.000: 0.000169 s, n=4.000: 0.000203 s, n=16.000: 0.000425 s, n=64.000: 0.00108 s)"
+   },
+   "memoria": {
+    "nota": 9.6,
+    "detalle": "pico 1.5 MB con n = 64.000"
+   }
+  },
+  "exposicion_por_edad": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.0275 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.66 (n=1.000: 0.00526 s, n=4.000: 0.0142 s, n=16.000: 0.0275 s, n=64.000: 0.0683 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "extraer_muestra": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00557 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.60 (n=1.000: 0.00312 s, n=4.000: 0.00328 s, n=16.000: 0.00557 s, n=64.000: 0.0128 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.4 MB con n = 64.000"
+   }
+  },
+  "filtrar_correlacion_alta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00294 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.90 (n=1.000: 0.000714 s, n=4.000: 0.00127 s, n=16.000: 0.00294 s, n=64.000: 0.0102 s)"
+   },
+   "memoria": {
+    "nota": 8.8,
+    "detalle": "pico 4.0 MB con n = 64.000"
+   }
+  },
+  "filtrar_varianza_casi_nula": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0117 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.82 (n=1.000: 0.00389 s, n=4.000: 0.00571 s, n=16.000: 0.0117 s, n=64.000: 0.0365 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "filtrar_vif_iterativo": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0415 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.8,
+    "detalle": "tiempo ∝ n^1.03 (n=1.000: 0.0101 s, n=4.000: 0.0173 s, n=16.000: 0.0415 s, n=64.000: 0.174 s)"
+   },
+   "memoria": {
+    "nota": 7.5,
+    "detalle": "pico 16.9 MB con n = 64.000"
+   }
+  },
+  "fraccion_anio": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "frontera_eficiente": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "59.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "funcion_distribucion_empirica": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00296 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.83 (n=1.000: 0.00042 s, n=4.000: 0.00102 s, n=16.000: 0.00296 s, n=64.000: 0.00939 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "funcion_exceso_medio": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00724 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.93 (n=1.000: 0.00129 s, n=4.000: 0.0023 s, n=16.000: 0.00724 s, n=64.000: 0.0264 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "funciones_escalonadas": {
+   "velocidad": {
+    "nota": 8.2,
+    "detalle": "0.0764 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.1,
+    "detalle": "tiempo ∝ n^1.13 (n=1.000: 0.02 s, n=4.000: 0.0324 s, n=16.000: 0.0764 s, n=64.000: 0.368 s)"
+   },
+   "memoria": {
+    "nota": 6.6,
+    "detalle": "pico 48.3 MB con n = 64.000"
+   }
+  },
+  "games_howell": {
+   "velocidad": {
+    "nota": 6.4,
+    "detalle": "0.636 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^-0.01 (n=1.000: 0.448 s, n=4.000: 0.526 s, n=16.000: 0.636 s, n=64.000: 0.624 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "ganancia_por_bajada_precio": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00575 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.72 (n=1.000: 0.00233 s, n=4.000: 0.00297 s, n=16.000: 0.00575 s, n=64.000: 0.0156 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.9 MB con n = 64.000"
+   }
+  },
+  "generador_congruencial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00325 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.2,
+    "detalle": "tiempo ∝ n^1.11 (n=1.000: 0.000194 s, n=4.000: 0.000796 s, n=16.000: 0.00325 s, n=64.000: 0.0152 s)"
+   },
+   "memoria": {
+    "nota": 9.6,
+    "detalle": "pico 1.5 MB con n = 64.000"
+   }
+  },
+  "generar_normal_multivariante": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00211 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.87 (n=1.000: 0.000336 s, n=4.000: 0.000688 s, n=16.000: 0.00211 s, n=64.000: 0.00708 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.7 MB con n = 64.000"
+   }
+  },
+  "generar_por_aceptacion_rechazo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00866 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.00166 s, n=4.000: 0.00313 s, n=16.000: 0.00866 s, n=64.000: 0.0306 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.8 MB con n = 64.000"
+   }
+  },
+  "generar_por_inversion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0021 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.000534 s, n=4.000: 0.000744 s, n=16.000: 0.0021 s, n=64.000: 0.00585 s)"
+   },
+   "memoria": {
+    "nota": 9.5,
+    "detalle": "pico 1.8 MB con n = 64.000"
+   }
+  },
+  "grafico_ajuste_distribuciones": {
+   "velocidad": {
+    "nota": 8.7,
+    "detalle": "0.0439 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.46 (n=1.000: 0.026 s, n=4.000: 0.0306 s, n=16.000: 0.0439 s, n=64.000: 0.0826 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 10.0 MB con n = 64.000"
+   }
+  },
+  "grafico_balance": {
+   "velocidad": {
+    "nota": 8.9,
+    "detalle": "37.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.1 MB"
+   }
+  },
+  "grafico_bandas_regresion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "10.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_bandido": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "16.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_biplot": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "11.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.5 MB"
+   }
+  },
+  "grafico_calibracion": {
+   "velocidad": {
+    "nota": 9.0,
+    "detalle": "0.0319 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.17 (n=1.000: 0.0283 s, n=4.000: 0.0305 s, n=16.000: 0.0319 s, n=64.000: 0.0406 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.5 MB con n = 64.000"
+   }
+  },
+  "grafico_caras_chernoff": {
+   "velocidad": {
+    "nota": 7.9,
+    "detalle": "109.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.4 MB"
+   }
+  },
+  "grafico_clusters_pca": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "0.0193 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.17 (n=1.000: 0.0166 s, n=4.000: 0.0178 s, n=16.000: 0.0193 s, n=64.000: 0.0244 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.1 MB con n = 64.000"
+   }
+  },
+  "grafico_comparar_grupos": {
+   "velocidad": {
+    "nota": 8.9,
+    "detalle": "0.0371 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.36 (n=1.000: 0.0261 s, n=4.000: 0.0278 s, n=16.000: 0.0371 s, n=64.000: 0.0614 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "grafico_control_t2": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "10.9 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_coordenadas_paralelas": {
+   "velocidad": {
+    "nota": 8.0,
+    "detalle": "101.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB"
+   }
+  },
+  "grafico_copula": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "9.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_curva_potencia": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "61.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_curva_roc": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "0.0242 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.61 (n=1.000: 0.0126 s, n=4.000: 0.0175 s, n=16.000: 0.0242 s, n=64.000: 0.0565 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "grafico_curvas_andrews": {
+   "velocidad": {
+    "nota": 8.3,
+    "detalle": "69.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.0 MB"
+   }
+  },
+  "grafico_dendrograma": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "8.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB"
+   }
+  },
+  "grafico_dependencia_parcial": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "13.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.5 MB"
+   }
+  },
+  "grafico_diagnostico_residuos": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.124 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.88 (n=1.000: 0.0431 s, n=4.000: 0.0537 s, n=16.000: 0.124 s, n=64.000: 0.418 s)"
+   },
+   "memoria": {
+    "nota": 7.2,
+    "detalle": "pico 24.2 MB con n = 64.000"
+   }
+  },
+  "grafico_distribucion": {
+   "velocidad": {
+    "nota": 7.9,
+    "detalle": "0.109 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.78 (n=1.000: 0.0332 s, n=4.000: 0.0543 s, n=16.000: 0.109 s, n=64.000: 0.322 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.5 MB con n = 64.000"
+   }
+  },
+  "grafico_efecto_spline": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "5.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB"
+   }
+  },
+  "grafico_efectos_2k": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "24.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_fdr": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "0.0174 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.40 (n=1.000: 0.0132 s, n=4.000: 0.0143 s, n=16.000: 0.0174 s, n=64.000: 0.0303 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 9.4 MB con n = 64.000"
+   }
+  },
+  "grafico_frontera_eficiente": {
+   "velocidad": {
+    "nota": 8.5,
+    "detalle": "55.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_ganancia_lift": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.0279 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.38 (n=1.000: 0.0256 s, n=4.000: 0.0295 s, n=16.000: 0.0279 s, n=64.000: 0.0472 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "grafico_hexbin": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "19.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 1.0 MB"
+   }
+  },
+  "grafico_importancias": {
+   "velocidad": {
+    "nota": 9.8,
+    "detalle": "13.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_incidencia_acumulada": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "8.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.7 MB"
+   }
+  },
+  "grafico_interaccion": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "19.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_kaplan_meier": {
+   "velocidad": {
+    "nota": 7.7,
+    "detalle": "0.147 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.7,
+    "detalle": "tiempo ∝ n^1.18 (n=1.000: 0.0373 s, n=4.000: 0.0527 s, n=16.000: 0.147 s, n=64.000: 0.759 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 13.1 MB con n = 64.000"
+   }
+  },
+  "grafico_matriz_correlaciones": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "19.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.9 MB"
+   }
+  },
+  "grafico_metaanalisis": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "15.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.5 MB"
+   }
+  },
+  "grafico_odds_ratios": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "19.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_potencia": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "17.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_precision_recall": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "0.0171 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.55 (n=1.000: 0.0107 s, n=4.000: 0.0121 s, n=16.000: 0.0171 s, n=64.000: 0.0366 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 8.6 MB con n = 64.000"
+   }
+  },
+  "grafico_qq": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0119 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.38 (n=1.000: 0.00861 s, n=4.000: 0.00912 s, n=16.000: 0.0119 s, n=64.000: 0.0201 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 6.9 MB con n = 64.000"
+   }
+  },
+  "grafico_region_rechazo": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "14.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.5 MB"
+   }
+  },
+  "grafico_regresion_simple": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0155 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.29 (n=1.000: 0.0134 s, n=4.000: 0.0136 s, n=16.000: 0.0155 s, n=64.000: 0.023 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 6.8 MB con n = 64.000"
+   }
+  },
+  "grafico_regularizacion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "7.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB"
+   }
+  },
+  "grafico_relatividades": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "11.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.4 MB"
+   }
+  },
+  "grafico_reserva_bootstrap": {
+   "velocidad": {
+    "nota": 8.9,
+    "detalle": "33.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.9 MB"
+   }
+  },
+  "grafico_residuos_agrupados": {
+   "velocidad": {
+    "nota": 9.3,
+    "detalle": "0.0216 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.03 (n=1.000: 0.0175 s, n=4.000: 0.0209 s, n=16.000: 0.0216 s, n=64.000: 0.0224 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "grafico_seleccion_k": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "19.7 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.7 MB"
+   }
+  },
+  "grafico_superficie_respuesta": {
+   "velocidad": {
+    "nota": 8.6,
+    "detalle": "48.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.9 MB"
+   }
+  },
+  "grafico_tabla_mortalidad": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "14.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_trayectorias": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "17.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 9.7,
+    "detalle": "pico 1.4 MB"
+   }
+  },
+  "grafico_trazas_mcmc": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "122.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 9.3,
+    "detalle": "pico 2.3 MB"
+   }
+  },
+  "grafico_umbrales": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "0.0197 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.59 (n=1.000: 0.0129 s, n=4.000: 0.0142 s, n=16.000: 0.0197 s, n=64.000: 0.0447 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "grafico_variable_anadida": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "18.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.6 MB"
+   }
+  },
+  "grafico_vif": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "11.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB"
+   }
+  },
+  "grafico_violin": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "24.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.5 MB"
+   }
+  },
+  "homogeneidad_varianzas": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0163 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.47 (n=1.000: 0.00614 s, n=4.000: 0.00604 s, n=16.000: 0.0163 s, n=64.000: 0.0314 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 9.5,
+    "detalle": "α real con lognormales iguales: Brown-Forsythe 0.034, Bartlett 0.736 (1000 sim.)"
+   }
+  },
+  "hosmer_lemeshow": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00978 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.26 (n=1.000: 0.00984 s, n=4.000: 0.00918 s, n=16.000: 0.00978 s, n=64.000: 0.014 s)"
+   },
+   "memoria": {
+    "nota": 9.3,
+    "detalle": "pico 2.4 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real 0.049 con el modelo correcto (n=500, 1000 sim.)"
+   }
+  },
+  "importancia_permutacion": {
+   "velocidad": {
+    "nota": 5.9,
+    "detalle": "1.15 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.99 (n=1.000: 0.0922 s, n=4.000: 0.391 s, n=16.000: 1.15 s, n=64.000: 4.57 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.1 MB con n = 64.000"
+   }
+  },
+  "imputacion_multiple": {
+   "velocidad": {
+    "nota": 5.9,
+    "detalle": "1.06 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.73 (n=1.000: 0.529 s, n=4.000: 0.556 s, n=16.000: 1.06 s, n=64.000: 2.92 s)"
+   },
+   "memoria": {
+    "nota": 6.6,
+    "detalle": "pico 48.7 MB con n = 64.000"
+   }
+  },
+  "imputar": {
+   "velocidad": {
+    "nota": 9.2,
+    "detalle": "0.024 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.67 (n=1.000: 0.0171 s, n=4.000: 0.0115 s, n=16.000: 0.024 s, n=64.000: 0.0611 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.9 MB con n = 64.000"
+   }
+  },
+  "incidencia_acumulada": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.121 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.0135 s, n=4.000: 0.0377 s, n=16.000: 0.121 s, n=64.000: 0.34 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.8 MB con n = 64.000"
+   }
+  },
+  "indicadores_fecundidad": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "indice_dispersion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00105 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.90 (n=1.000: 0.000336 s, n=4.000: 0.000425 s, n=16.000: 0.00105 s, n=64.000: 0.00365 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "informacion_fisher": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00545 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.96 (n=1.000: 0.00149 s, n=4.000: 0.00216 s, n=16.000: 0.00545 s, n=64.000: 0.0208 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "inmunizacion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "intervalo_proporcion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura con p=0.05, n=40: Wilson 0.952 · Clopper-Pearson 0.985 · Wald 0.882 (1000 sim.)"
+   }
+  },
+  "kaplan_meier": {
+   "velocidad": {
+    "nota": 7.9,
+    "detalle": "0.107 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 7.9,
+    "detalle": "tiempo ∝ n^1.30 (n=1.000: 0.0132 s, n=4.000: 0.0264 s, n=16.000: 0.107 s, n=64.000: 0.647 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC de S(10): 0.958 (n=200, censura uniforme, 1000 sim.)"
+   }
+  },
+  "logit_multinomial_sas": {
+   "velocidad": {
+    "nota": 6.5,
+    "detalle": "0.544 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.94 (n=1.000: 0.104 s, n=4.000: 0.227 s, n=16.000: 0.544 s, n=64.000: 2 s)"
+   },
+   "memoria": {
+    "nota": 5.5,
+    "detalle": "pico 169.3 MB con n = 64.000"
+   }
+  },
+  "manova": {
+   "velocidad": {
+    "nota": 8.7,
+    "detalle": "0.0463 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.014 s, n=4.000: 0.029 s, n=16.000: 0.0463 s, n=64.000: 0.15 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 9.1 MB con n = 64.000"
+   }
+  },
+  "mapa_autoorganizado": {
+   "velocidad": {
+    "nota": 8.7,
+    "detalle": "0.0431 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.48 (n=1.000: 0.045 s, n=4.000: 0.0376 s, n=16.000: 0.0431 s, n=64.000: 0.0834 s)"
+   },
+   "memoria": {
+    "nota": 6.0,
+    "detalle": "pico 104.5 MB con n = 64.000"
+   }
+  },
+  "matrices_confusion": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "0.0207 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.90 (n=1.000: 0.00334 s, n=4.000: 0.00738 s, n=16.000: 0.0207 s, n=64.000: 0.0715 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.1 MB con n = 64.000"
+   }
+  },
+  "matriz_correlaciones": {
+   "velocidad": {
+    "nota": 9.4,
+    "detalle": "0.0202 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.24 (n=1.000: 0.0169 s, n=4.000: 0.018 s, n=16.000: 0.0202 s, n=64.000: 0.0281 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "matriz_covarianzas": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00473 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.74 (n=1.000: 0.00194 s, n=4.000: 0.00205 s, n=16.000: 0.00473 s, n=64.000: 0.0131 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 10.2 MB con n = 64.000"
+   }
+  },
+  "mediacion": {
+   "velocidad": {
+    "nota": 7.4,
+    "detalle": "0.191 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.1,
+    "detalle": "tiempo ∝ n^1.13 (n=1.000: 0.0344 s, n=4.000: 0.0625 s, n=16.000: 0.191 s, n=64.000: 0.91 s)"
+   },
+   "memoria": {
+    "nota": 7.5,
+    "detalle": "pico 17.5 MB con n = 64.000"
+   }
+  },
+  "medidas_influencia": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00207 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.63 (n=1.000: 0.00103 s, n=4.000: 0.00122 s, n=16.000: 0.00207 s, n=64.000: 0.00496 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.1 MB con n = 64.000"
+   }
+  },
+  "medidas_riesgo_2x2": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "mejor_subconjunto": {
+   "velocidad": {
+    "nota": 7.2,
+    "detalle": "0.257 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.71 (n=1.000: 0.133 s, n=4.000: 0.155 s, n=16.000: 0.257 s, n=64.000: 0.684 s)"
+   },
+   "memoria": {
+    "nota": 5.1,
+    "detalle": "pico 268.0 MB con n = 64.000"
+   }
+  },
+  "metaanalisis": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00169 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.14 (n=1.000: 0.00154 s, n=4.000: 0.00137 s, n=16.000: 0.00169 s, n=64.000: 0.00205 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.2 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura IC 95 % con τ = 0.2: fijos 0.752 · DL 0.898 · REML 0.904 · DL + Hartung-Knapp 0.940 (500 sim.)"
+   }
+  },
+  "metodo_delta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "metodo_momentos": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00208 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.88 (n=1.000: 0.000678 s, n=4.000: 0.000948 s, n=16.000: 0.00208 s, n=64.000: 0.00706 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "metricas_binarias": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.016 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.69 (n=1.000: 0.00541 s, n=4.000: 0.00763 s, n=16.000: 0.016 s, n=64.000: 0.0416 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.3 MB con n = 64.000"
+   }
+  },
+  "metricas_regresion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00051 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 6.02e-05 s, n=4.000: 0.000127 s, n=16.000: 0.00051 s, n=64.000: 0.00203 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "metropolis": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "28.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB"
+   }
+  },
+  "mezclas_gaussianas": {
+   "velocidad": {
+    "nota": 6.1,
+    "detalle": "0.941 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.54 (n=1.000: 0.16 s, n=4.000: 0.164 s, n=16.000: 0.941 s, n=64.000: 1.98 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 13.5 MB con n = 64.000"
+   }
+  },
+  "modelo_factores": {
+   "velocidad": {
+    "nota": 9.8,
+    "detalle": "0.0133 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.67 (n=1.000: 0.00675 s, n=4.000: 0.00789 s, n=16.000: 0.0133 s, n=64.000: 0.0339 s)"
+   },
+   "memoria": {
+    "nota": 7.4,
+    "detalle": "pico 19.5 MB con n = 64.000"
+   }
+  },
+  "modelo_grafico_gaussiano": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00627 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.51 (n=1.000: 0.00425 s, n=4.000: 0.00471 s, n=16.000: 0.00627 s, n=64.000: 0.0128 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 12.7 MB con n = 64.000"
+   }
+  },
+  "modelo_loglineal": {
+   "velocidad": {
+    "nota": 9.3,
+    "detalle": "0.0217 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.18 (n=1.000: 0.0181 s, n=4.000: 0.0186 s, n=16.000: 0.0217 s, n=64.000: 0.0277 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.3 MB con n = 64.000"
+   }
+  },
+  "modelo_ngramas": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.0276 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.6,
+    "detalle": "tiempo ∝ n^1.06 (n=1.000: 0.00172 s, n=4.000: 0.00713 s, n=16.000: 0.0276 s, n=64.000: 0.12 s)"
+   },
+   "memoria": {
+    "nota": 9.9,
+    "detalle": "pico 1.1 MB con n = 64.000"
+   }
+  },
+  "moderacion": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "0.014 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.54 (n=1.000: 0.00927 s, n=4.000: 0.0121 s, n=16.000: 0.014 s, n=64.000: 0.0295 s)"
+   },
+   "memoria": {
+    "nota": 7.9,
+    "detalle": "pico 11.8 MB con n = 64.000"
+   }
+  },
+  "momentos_distribucion": {
+   "velocidad": {
+    "nota": 8.0,
+    "detalle": "97.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "muestrear_siguiente": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "muestrear_texto": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00534 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^-0.03 (n=1.000: 0.0051 s, n=4.000: 0.00501 s, n=16.000: 0.00534 s, n=64.000: 0.00513 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   }
+  },
+  "nacimiento_muerte": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "nelson_aalen": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0162 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.51 (n=1.000: 0.00843 s, n=4.000: 0.00974 s, n=16.000: 0.0162 s, n=64.000: 0.0328 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.5 MB con n = 64.000"
+   }
+  },
+  "optimismo_bootstrap": {
+   "velocidad": {
+    "nota": 5.8,
+    "detalle": "1.21 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.70 (n=1.000: 0.563 s, n=4.000: 0.684 s, n=16.000: 1.21 s, n=64.000: 3.19 s)"
+   },
+   "memoria": {
+    "nota": 4.8,
+    "detalle": "pico 405.2 MB con n = 64.000"
+   }
+  },
+  "paseo_aleatorio": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00444 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.8,
+    "detalle": "tiempo ∝ n^1.03 (n=1.000: 0.000573 s, n=4.000: 0.00123 s, n=16.000: 0.00444 s, n=64.000: 0.0184 s)"
+   },
+   "memoria": {
+    "nota": 7.4,
+    "detalle": "pico 20.7 MB con n = 64.000"
+   }
+  },
+  "pca_completo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00528 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.4,
+    "detalle": "tiempo ∝ n^1.09 (n=1.000: 0.00309 s, n=4.000: 0.00371 s, n=16.000: 0.00528 s, n=64.000: 0.0238 s)"
+   },
+   "memoria": {
+    "nota": 8.0,
+    "detalle": "pico 10.5 MB con n = 64.000"
+   }
+  },
+  "pca_funcional": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "0.0142 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.75 (n=1.000: 0.00118 s, n=4.000: 0.00413 s, n=16.000: 0.0142 s, n=64.000: 0.0404 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 14.4 MB con n = 64.000"
+   }
+  },
+  "perfil_respuesta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000807 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.24 (n=1.000: 0.000679 s, n=4.000: 0.000611 s, n=16.000: 0.000807 s, n=64.000: 0.00113 s)"
+   },
+   "memoria": {
+    "nota": 9.9,
+    "detalle": "pico 1.1 MB con n = 64.000"
+   }
+  },
+  "pesos_por_clase": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.000786 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.38 (n=1.000: 0.000418 s, n=4.000: 0.000553 s, n=16.000: 0.000786 s, n=64.000: 0.00134 s)"
+   },
+   "memoria": {
+    "nota": 9.9,
+    "detalle": "pico 1.1 MB con n = 64.000"
+   }
+  },
+  "pls_da": {
+   "velocidad": {
+    "nota": 7.3,
+    "detalle": "0.22 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.81 (n=1.000: 0.0252 s, n=4.000: 0.0561 s, n=16.000: 0.22 s, n=64.000: 0.68 s)"
+   },
+   "memoria": {
+    "nota": 6.7,
+    "detalle": "pico 43.8 MB con n = 64.000"
+   }
+  },
+  "posterior_conjugado": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   },
+   "cobertura_ic": {
+    "nota": 9.0,
+    "detalle": "cobertura frecuentista del IC creíble Beta(1,1), n = 30, p = 0.1: 0.974 (500 sim.)"
+   }
+  },
+  "posthoc_dunn": {
+   "velocidad": {
+    "nota": 8.0,
+    "detalle": "0.0995 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.07 (n=1.000: 0.0958 s, n=4.000: 0.0945 s, n=16.000: 0.0995 s, n=64.000: 0.11 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.7 MB con n = 64.000"
+   }
+  },
+  "potencia_contraste_medias": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "potencia_por_simulacion": {
+   "velocidad": {
+    "nota": 6.8,
+    "detalle": "380.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "precio_bono": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "preparar_matriz_clustering": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00911 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.51 (n=1.000: 0.00488 s, n=4.000: 0.00561 s, n=16.000: 0.00911 s, n=64.000: 0.0184 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "preparar_matriz_modelo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00588 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.61 (n=1.000: 0.00307 s, n=4.000: 0.00345 s, n=16.000: 0.00588 s, n=64.000: 0.0137 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "prima_neta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "prima_por_principios": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "6.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 9.2,
+    "detalle": "pico 2.4 MB"
+   }
+  },
+  "prima_pura": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0416 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.90 (n=1.000: 0.00515 s, n=4.000: 0.0119 s, n=16.000: 0.0416 s, n=64.000: 0.145 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.3 MB con n = 64.000"
+   }
+  },
+  "prima_tarifa": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "probabilidad_ruina": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "probabilidad_supervivencia": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "proceso_difusion": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00411 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.00113 s, n=4.000: 0.00511 s, n=16.000: 0.00411 s, n=64.000: 0.0134 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "provision_matematica": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "8.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "proyeccion_leslie": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "proyeccion_pca": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00116 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.55 (n=1.000: 0.000912 s, n=4.000: 0.000982 s, n=16.000: 0.00116 s, n=64.000: 0.00249 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.1 MB con n = 64.000"
+   }
+  },
+  "prueba_estres": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "puntuacion_propension": {
+   "velocidad": {
+    "nota": 6.8,
+    "detalle": "0.419 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.70 (n=1.000: 0.0708 s, n=4.000: 0.112 s, n=16.000: 0.419 s, n=64.000: 1.1 s)"
+   },
+   "memoria": {
+    "nota": 4.8,
+    "detalle": "pico 385.7 MB con n = 64.000"
+   }
+  },
+  "qx_ley": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "recuperar_tfidf": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0115 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.91 (n=1.000: 0.0024 s, n=4.000: 0.00413 s, n=16.000: 0.0115 s, n=64.000: 0.0405 s)"
+   },
+   "memoria": {
+    "nota": 9.8,
+    "detalle": "pico 1.3 MB con n = 64.000"
+   }
+  },
+  "recursion_panjer": {
+   "velocidad": {
+    "nota": 9.9,
+    "detalle": "0.0108 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 7.2,
+    "detalle": "tiempo ∝ n^1.40 (n=1.000: 0.00113 s, n=4.000: 0.00277 s, n=16.000: 0.0108 s, n=64.000: 0.0755 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.2 MB con n = 64.000"
+   }
+  },
+  "reglas_asociacion": {
+   "velocidad": {
+    "nota": 9.5,
+    "detalle": "0.0178 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.54 (n=1.000: 0.00953 s, n=4.000: 0.0108 s, n=16.000: 0.0178 s, n=64.000: 0.0377 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.3 MB con n = 64.000"
+   }
+  },
+  "regresion_inversa": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00398 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.52 (n=1.000: 0.000598 s, n=4.000: 0.00101 s, n=16.000: 0.00398 s, n=64.000: 0.00818 s)"
+   },
+   "memoria": {
+    "nota": 8.5,
+    "detalle": "pico 5.6 MB con n = 64.000"
+   }
+  },
+  "regresion_inversa_cortes": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00861 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.00232 s, n=4.000: 0.00275 s, n=16.000: 0.00861 s, n=64.000: 0.0281 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.8 MB con n = 64.000"
+   }
+  },
+  "regresion_local": {
+   "velocidad": {
+    "nota": 6.7,
+    "detalle": "0.423 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.19 (n=1.000: 0.0463 s, n=4.000: 0.372 s, n=16.000: 0.423 s, n=64.000: 0.552 s)"
+   },
+   "memoria": {
+    "nota": 6.4,
+    "detalle": "pico 65.6 MB con n = 64.000"
+   }
+  },
+  "regresion_logistica_firth": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00749 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.95 (n=1.000: 0.00119 s, n=4.000: 0.0023 s, n=16.000: 0.00749 s, n=64.000: 0.028 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.2 MB con n = 64.000"
+   },
+   "insesgadez": {
+    "nota": 9.6,
+    "detalle": "sesgo relativo +1.0% (logística normal: +8.5%; n=80, β=1, 1000 sim.)"
+   },
+   "ecm": {
+    "nota": 10.0,
+    "detalle": "ECM 0.118 vs logística 0.150 (n=80, β=1, 1000 sim.)"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC de Wald: 0.949 (n=80, β=1, 1000 sim.)"
+   }
+  },
+  "regresion_matriz_indicadora": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "regresion_multivariante": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0156 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.30 (n=1.000: 0.0128 s, n=4.000: 0.0142 s, n=16.000: 0.0156 s, n=64.000: 0.0237 s)"
+   },
+   "memoria": {
+    "nota": 8.1,
+    "detalle": "pico 8.7 MB con n = 64.000"
+   }
+  },
+  "regresion_no_lineal": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00793 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.9,
+    "detalle": "tiempo ∝ n^1.01 (n=1.000: 0.00142 s, n=4.000: 0.00255 s, n=16.000: 0.00793 s, n=64.000: 0.0323 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   }
+  },
+  "regresion_pls_pcr": {
+   "velocidad": {
+    "nota": 6.6,
+    "detalle": "0.481 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.84 (n=1.000: 0.16 s, n=4.000: 0.208 s, n=16.000: 0.481 s, n=64.000: 1.54 s)"
+   },
+   "memoria": {
+    "nota": 6.7,
+    "detalle": "pico 43.0 MB con n = 64.000"
+   }
+  },
+  "regresion_polinomica": {
+   "velocidad": {
+    "nota": 8.1,
+    "detalle": "0.092 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 0.0139 s, n=4.000: 0.0382 s, n=16.000: 0.092 s, n=64.000: 0.368 s)"
+   },
+   "memoria": {
+    "nota": 7.5,
+    "detalle": "pico 17.9 MB con n = 64.000"
+   }
+  },
+  "regresion_por_origen": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00479 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.00151 s, n=4.000: 0.00219 s, n=16.000: 0.00479 s, n=64.000: 0.0157 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.7 MB con n = 64.000"
+   }
+  },
+  "regresion_robusta": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0382 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.8,
+    "detalle": "tiempo ∝ n^1.03 (n=1.000: 0.012 s, n=4.000: 0.0182 s, n=16.000: 0.0382 s, n=64.000: 0.159 s)"
+   },
+   "memoria": {
+    "nota": 6.5,
+    "detalle": "pico 53.9 MB con n = 64.000"
+   }
+  },
+  "renta_actuarial": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "resumen_auc_multiclase": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "0.0613 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.89 (n=1.000: 0.0179 s, n=4.000: 0.0261 s, n=16.000: 0.0613 s, n=64.000: 0.21 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.7 MB con n = 64.000"
+   }
+  },
+  "resumen_descriptivo": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "0.0392 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.016 s, n=4.000: 0.0213 s, n=16.000: 0.0392 s, n=64.000: 0.13 s)"
+   },
+   "memoria": {
+    "nota": 9.4,
+    "detalle": "pico 2.1 MB con n = 64.000"
+   }
+  },
+  "resumen_faltantes": {
+   "velocidad": {
+    "nota": 8.4,
+    "detalle": "0.0596 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.9,
+    "detalle": "tiempo ∝ n^1.16 (n=1.000: 0.0145 s, n=4.000: 0.0226 s, n=16.000: 0.0596 s, n=64.000: 0.297 s)"
+   },
+   "memoria": {
+    "nota": 8.3,
+    "detalle": "pico 7.3 MB con n = 64.000"
+   }
+  },
+  "rmst": {
+   "velocidad": {
+    "nota": 9.6,
+    "detalle": "0.0159 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.70 (n=1.000: 0.00889 s, n=4.000: 0.01 s, n=16.000: 0.0159 s, n=64.000: 0.0421 s)"
+   },
+   "memoria": {
+    "nota": 8.8,
+    "detalle": "pico 4.0 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura del IC del RMST(8) (n≈150): 0.936 (250 sim.)"
+   }
+  },
+  "ruina_jugador": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "seguro_vida": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "seleccion_backward": {
+   "velocidad": {
+    "nota": 6.1,
+    "detalle": "0.9 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.95 (n=1.000: 0.167 s, n=4.000: 0.304 s, n=16.000: 0.9 s, n=64.000: 3.34 s)"
+   },
+   "memoria": {
+    "nota": 4.9,
+    "detalle": "pico 355.5 MB con n = 64.000"
+   },
+   "consistencia": {
+    "nota": 8.8,
+    "detalle": "una variable de ruido sobrevive: AIC 17% · BIC 2% (n=300, 200 sim.; la nota usa BIC)"
+   }
+  },
+  "seleccion_forward": {
+   "velocidad": {
+    "nota": 6.3,
+    "detalle": "0.74 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.88 (n=1.000: 0.151 s, n=4.000: 0.249 s, n=16.000: 0.74 s, n=64.000: 2.51 s)"
+   },
+   "memoria": {
+    "nota": 4.9,
+    "detalle": "pico 358.1 MB con n = 64.000"
+   }
+  },
+  "seleccion_por_pvalor": {
+   "velocidad": {
+    "nota": 6.1,
+    "detalle": "0.85 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.86 (n=1.000: 0.234 s, n=4.000: 0.373 s, n=16.000: 0.85 s, n=64.000: 2.81 s)"
+   },
+   "memoria": {
+    "nota": 4.5,
+    "detalle": "pico 545.0 MB con n = 64.000"
+   }
+  },
+  "sensibilidad_longevidad": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "sensibilidad_por_grupo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00728 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 8.3,
+    "detalle": "tiempo ∝ n^1.24 (n=1.000: 0.00293 s, n=4.000: 0.0038 s, n=16.000: 0.00728 s, n=64.000: 0.0405 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 8.1 MB con n = 64.000"
+   }
+  },
+  "simular_bandido": {
+   "velocidad": {
+    "nota": 8.8,
+    "detalle": "40.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.1 MB"
+   }
+  },
+  "simular_browniano": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00504 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.95 (n=1.000: 0.000652 s, n=4.000: 0.00145 s, n=16.000: 0.00504 s, n=64.000: 0.0189 s)"
+   },
+   "memoria": {
+    "nota": 7.2,
+    "detalle": "pico 25.7 MB con n = 64.000"
+   }
+  },
+  "simular_cadena_markov": {
+   "velocidad": {
+    "nota": 7.8,
+    "detalle": "0.128 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 0.012 s, n=4.000: 0.0331 s, n=16.000: 0.128 s, n=64.000: 0.509 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.4 MB con n = 64.000"
+   }
+  },
+  "simular_copula": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00155 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.94 (n=1.000: 0.000197 s, n=4.000: 0.00051 s, n=16.000: 0.00155 s, n=64.000: 0.00567 s)"
+   },
+   "memoria": {
+    "nota": 8.7,
+    "detalle": "pico 4.6 MB con n = 64.000"
+   }
+  },
+  "simular_proceso_poisson": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00107 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^1.00 (n=1.000: 8.55e-05 s, n=4.000: 0.000244 s, n=16.000: 0.00107 s, n=64.000: 0.0043 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "simular_regresion_a_la_media": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00146 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.75 (n=1.000: 0.00028 s, n=4.000: 0.00048 s, n=16.000: 0.00146 s, n=64.000: 0.0041 s)"
+   },
+   "memoria": {
+    "nota": 9.0,
+    "detalle": "pico 3.1 MB con n = 64.000"
+   }
+  },
+  "simular_siniestralidad_agregada": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0054 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.00216 s, n=4.000: 0.00263 s, n=16.000: 0.0054 s, n=64.000: 0.0175 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.6 MB con n = 64.000"
+   }
+  },
+  "smote": {
+   "velocidad": {
+    "nota": 9.7,
+    "detalle": "0.0135 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.96 (n=1.000: 0.00319 s, n=4.000: 0.00463 s, n=16.000: 0.0135 s, n=64.000: 0.0512 s)"
+   },
+   "memoria": {
+    "nota": 8.2,
+    "detalle": "pico 7.8 MB con n = 64.000"
+   }
+  },
+  "submuestreo_por_ratio": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0042 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.76 (n=1.000: 0.00166 s, n=4.000: 0.0021 s, n=16.000: 0.0042 s, n=64.000: 0.012 s)"
+   },
+   "memoria": {
+    "nota": 7.8,
+    "detalle": "pico 12.0 MB con n = 64.000"
+   }
+  },
+  "superficie_respuesta": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.029 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.36 (n=1.000: 0.0193 s, n=4.000: 0.0221 s, n=16.000: 0.029 s, n=64.000: 0.0478 s)"
+   },
+   "memoria": {
+    "nota": 7.7,
+    "detalle": "pico 14.4 MB con n = 64.000"
+   }
+  },
+  "tabla_coeficientes": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00217 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.07 (n=1.000: 0.0015 s, n=4.000: 0.0016 s, n=16.000: 0.00217 s, n=64.000: 0.00238 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   }
+  },
+  "tabla_conjunta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.8 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tabla_contingencia": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00966 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.62 (n=1.000: 0.00598 s, n=4.000: 0.00674 s, n=16.000: 0.00966 s, n=64.000: 0.0227 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.3 MB con n = 64.000"
+   }
+  },
+  "tabla_criterios": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "1.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tabla_ganancia_lift": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00874 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.52 (n=1.000: 0.00556 s, n=4.000: 0.00632 s, n=16.000: 0.00874 s, n=64.000: 0.0181 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "tabla_mortalidad": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.6 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tabla_nomograma": {
+   "velocidad": {
+    "nota": 9.1,
+    "detalle": "0.027 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.44 (n=1.000: 0.0212 s, n=4.000: 0.0215 s, n=16.000: 0.027 s, n=64.000: 0.0499 s)"
+   },
+   "memoria": {
+    "nota": 8.4,
+    "detalle": "pico 6.2 MB con n = 64.000"
+   }
+  },
+  "tabla_odds_ratios": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00244 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.11 (n=1.000: 0.00185 s, n=4.000: 0.00198 s, n=16.000: 0.00244 s, n=64.000: 0.00285 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 10.0,
+    "detalle": "cobertura real del IC 95 % del OR: 0.953 (n=80, β=1, 1000 sim.)"
+   }
+  },
+  "tabla_parametros_wald": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0019 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^-0.26 (n=1.000: 0.000815 s, n=4.000: 0.000931 s, n=16.000: 0.0019 s, n=64.000: 0.00133 s)"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "α real del Wald para un coeficiente nulo: 0.046 (n=80, β=1, 1000 sim.)"
+   }
+  },
+  "tabla_relatividades": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00343 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.37 (n=1.000: 0.00203 s, n=4.000: 0.00226 s, n=16.000: 0.00343 s, n=64.000: 0.00574 s)"
+   },
+   "memoria": {
+    "nota": 9.2,
+    "detalle": "pico 2.6 MB con n = 64.000"
+   }
+  },
+  "tabla_umbrales": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00204 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.88 (n=1.000: 0.000869 s, n=4.000: 0.00111 s, n=16.000: 0.00204 s, n=64.000: 0.00689 s)"
+   },
+   "memoria": {
+    "nota": 9.6,
+    "detalle": "pico 1.6 MB con n = 64.000"
+   }
+  },
+  "tamano_muestra_encuesta": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.1 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tamano_muestral_medias": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "2.4 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tamano_muestral_modelo": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.9 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tamano_muestral_proporciones": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "4.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tasas_especificas": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.5 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tendencia_polinomica_ponderada": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00139 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 9.9,
+    "detalle": "tiempo ∝ n^1.01 (n=1.000: 0.000144 s, n=4.000: 0.000394 s, n=16.000: 0.00139 s, n=64.000: 0.00565 s)"
+   },
+   "memoria": {
+    "nota": 8.7,
+    "detalle": "pico 4.6 MB con n = 64.000"
+   }
+  },
+  "teorema_bayes": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "tir_bono": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.3 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "transformacion_box_cox": {
+   "velocidad": {
+    "nota": 7.5,
+    "detalle": "0.171 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.76 (n=1.000: 0.0446 s, n=4.000: 0.0659 s, n=16.000: 0.171 s, n=64.000: 0.489 s)"
+   },
+   "memoria": {
+    "nota": 7.6,
+    "detalle": "pico 15.5 MB con n = 64.000"
+   }
+  },
+  "tukey_entre_grupos": {
+   "velocidad": {
+    "nota": 7.3,
+    "detalle": "0.224 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.04 (n=1.000: 0.188 s, n=4.000: 0.229 s, n=16.000: 0.224 s, n=64.000: 0.238 s)"
+   },
+   "memoria": {
+    "nota": 8.7,
+    "detalle": "pico 4.7 MB con n = 64.000"
+   },
+   "tamano_alfa": {
+    "nota": 10.0,
+    "detalle": "error familiar real 0.051 (3 grupos de 20, 1000 sim.)"
+   }
+  },
+  "umbral_optimo_youden": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0038 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.81 (n=1.000: 0.000944 s, n=4.000: 0.00152 s, n=16.000: 0.0038 s, n=64.000: 0.0117 s)"
+   },
+   "memoria": {
+    "nota": 8.9,
+    "detalle": "pico 3.7 MB con n = 64.000"
+   }
+  },
+  "validacion_cruzada": {
+   "velocidad": {
+    "nota": 7.0,
+    "detalle": "0.324 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.82 (n=1.000: 0.106 s, n=4.000: 0.155 s, n=16.000: 0.324 s, n=64.000: 1.01 s)"
+   },
+   "memoria": {
+    "nota": 5.8,
+    "detalle": "pico 121.1 MB con n = 64.000"
+   }
+  },
+  "valorar_swap": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.0 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  },
+  "var_tvar": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.00632 s con n = 16.000"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "tiempo ∝ n^0.85 (n=1.000: 0.00215 s, n=4.000: 0.00298 s, n=16.000: 0.00632 s, n=64.000: 0.0204 s)"
+   },
+   "memoria": {
+    "nota": 8.6,
+    "detalle": "pico 5.2 MB con n = 64.000"
+   },
+   "cobertura_ic": {
+    "nota": 9.2,
+    "detalle": "prob. real de superar el VaR 99 % (ideal 0.010): histórico 0.0108 · normal 0.0154 · Cornish-Fisher 0.0047 · GPD 0.0100 (t4, n=1000, 200 sim.)"
+   }
+  },
+  "vida_futura": {
+   "velocidad": {
+    "nota": 10.0,
+    "detalle": "0.2 ms por llamada (no depende de n)"
+   },
+   "escalabilidad": {
+    "nota": 10.0,
+    "detalle": "no depende del tamaño de los datos"
+   },
+   "memoria": {
+    "nota": 10.0,
+    "detalle": "pico 0.0 MB"
+   }
+  }
+ }
+}
