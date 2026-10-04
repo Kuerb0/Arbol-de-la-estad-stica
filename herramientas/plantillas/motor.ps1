@@ -37,23 +37,56 @@ function Es-Instalacion($c) {
     return (Test-Path -LiteralPath (Ruta $c 'py' 'construir_visor.py')) -or (Test-Path -LiteralPath (Join-Path $c 'construir_visor.py'))
 }
 
-function Elegir-Con-Dialogo($inicial, $texto) {
+# Ventana de la consola (o de Windows Terminal): se minimiza mientras se muestra el selector de carpetas y se restaura después.
+function Ventana-Consola {
     try {
+        if (-not ('ArbolWin.Consola' -as [type])) {
+            Add-Type -Namespace ArbolWin -Name Consola -MemberDefinition @'
+[DllImport("kernel32.dll")] public static extern IntPtr GetConsoleWindow();
+[DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr h, uint f);
+[DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int n);
+[DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
+'@
+        }
+        $c = [ArbolWin.Consola]::GetConsoleWindow()
+        if ($c -eq [IntPtr]::Zero) { return [IntPtr]::Zero }
+        $raiz = [ArbolWin.Consola]::GetAncestor($c, 3)           # GA_ROOTOWNER: con Windows Terminal da la ventana real
+        if ($raiz -ne [IntPtr]::Zero) { return $raiz }
+        return $c
+    } catch { return [IntPtr]::Zero }
+}
+
+function Elegir-Con-Dialogo($inicial, $texto) {
+    # El selector de carpetas de Windows. La consola se minimiza mientras está abierto (si no, tapa la ventana);
+    # si falla se ofrece escribir la ruta a mano.
+    Write-Host '  Se abre una ventana para elegir la carpeta (la consola se minimiza mientras tanto).' -ForegroundColor DarkCyan
+    $duenio = $null
+    $con = Ventana-Consola
+    try {
+        if ($con -ne [IntPtr]::Zero) { [void][ArbolWin.Consola]::ShowWindow($con, 6) }      # SW_MINIMIZE
         Add-Type -AssemblyName System.Windows.Forms
+        [void][Windows.Forms.Application]::EnableVisualStyles()
         $dlg = New-Object System.Windows.Forms.FolderBrowserDialog
         $dlg.Description = $texto
         $dlg.ShowNewFolderButton = $true
         if ($inicial -and (Test-Path -LiteralPath $inicial)) { $dlg.SelectedPath = $inicial }
+        # Ventana propietaria invisible pero activa y siempre encima: el selector sale al frente.
         $duenio = New-Object System.Windows.Forms.Form
-        $duenio.TopMost = $true; $duenio.ShowInTaskbar = $false
+        $duenio.TopMost = $true; $duenio.ShowInTaskbar = $false; $duenio.FormBorderStyle = 'None'
+        $duenio.StartPosition = 'CenterScreen'; $duenio.Opacity = 0; $duenio.Size = New-Object System.Drawing.Size(1, 1)
+        $duenio.Show(); $duenio.Activate()
         $r = $dlg.ShowDialog($duenio)
-        $duenio.Dispose()
-        if ($r -eq [System.Windows.Forms.DialogResult]::OK) { return $dlg.SelectedPath }
+        if ($r -eq [System.Windows.Forms.DialogResult]::OK -and $dlg.SelectedPath) { return $dlg.SelectedPath }
         return $null
     } catch {
+        if ($con -ne [IntPtr]::Zero) { [void][ArbolWin.Consola]::ShowWindow($con, 9); [void][ArbolWin.Consola]::SetForegroundWindow($con); $con = [IntPtr]::Zero }
+        Aviso "No he podido abrir el selector de carpetas ($($_.Exception.Message))."
         $p = Read-Host '      Escribe la ruta completa de la carpeta'
         if ($p) { return $p.Trim('"', ' ') }
         return $null
+    } finally {
+        if ($duenio) { try { $duenio.Close(); $duenio.Dispose() } catch { } }
+        if ($con -ne [IntPtr]::Zero) { [void][ArbolWin.Consola]::ShowWindow($con, 9); [void][ArbolWin.Consola]::SetForegroundWindow($con) }   # SW_RESTORE
     }
 }
 

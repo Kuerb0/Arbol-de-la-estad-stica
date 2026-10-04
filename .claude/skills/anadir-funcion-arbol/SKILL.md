@@ -19,6 +19,6 @@ Checklist (marca cada uno; no cierres sin completarlos):
 8. **Catálogo**: añade el nombre a `funciones` de al menos un concepto en `conceptos/catalogo.json` **y** `catalogo_base.json` (respeta el sangrado).
 9. **Rama nueva**: `RAMAS` en `construir_visor.py` (colores), `packages` en `py/pyproject.toml`, import y `__all__` en `arbol_estadistica/__init__.py`, árbol de texto en `INDEX.md`.
 10. **Cierre**: `python py/construir_visor.py`; `cd py && python -m pytest -q` (~4 min); si la tabla «qué usar» de `CLAUDE.md` gana fila, añadirla.
-11. **Si cambias `py/`, `assets/` o `.bat`**: subir versión en `py/VERSION.txt`, `py/pyproject.toml` y `__version__`, y `python herramientas/generar_instaladores.py`, y entrega a Mario las rutas de ambos `.bat` de `instaladores/` para que los pruebe.
+11. **Si cambias `py/`, `assets/` o `.bat`**: subir versión en `py/VERSION.txt`, `py/pyproject.toml` y `__version__`, y `python herramientas/generar_instaladores.py`, y publica con `python herramientas/publicar.py "qué cambió"` (commit + push); entrega a Mario las rutas de ambos `.bat` de `instaladores/` para que los pruebe.
 
 Trampas: variables locales `C`/`Q`/`I` rompen patsy; columnas raras → `Q("col")`; pandas 3 (`axis=`, `to_numpy(copy=True)`); sklearn 1.9 (`LassoCV(alphas=)`, helper `_logistica`); nada O(n²) sin submuestrear; Windows: rutas entre comillas, OneDrive puede bloquear escrituras (reintentar). Respeta ediciones del usuario y sus datos (`catalogo.json`, `conceptos/fichas_mias.json`).
